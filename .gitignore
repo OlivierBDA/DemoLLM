@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+build/
+dist/
+*.egg-info/
+
+# Environment
+.env
+
+# IDEs
+.vscode/
+.idea/
+
+# Demo files (optional, depending on if you want to share data)
+data/
+*.db
+*.faiss
+*.index
