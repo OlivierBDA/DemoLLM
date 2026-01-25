@@ -1,0 +1,16 @@
+{
+  "heroes": [
+    "Iron Man",
+    "Captain America",
+    "Thor",
+    "Spider-Man",
+    "Black Widow",
+    "Docteur Strange"
+  ],
+  "movies": [
+    "Avengers (2012)",
+    "Captain America: Civil War",
+    "Avengers: Infinity War",
+    "Avengers: Endgame"
+  ]
+}

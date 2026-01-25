@@ -14,6 +14,9 @@ dist/
 .vscode/
 .idea/
 
+# Models
+all-minilm-l6/
+
 # Demo files (optional, depending on if you want to share data)
 data/
 *.db
