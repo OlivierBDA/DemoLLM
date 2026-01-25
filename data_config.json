@@ -5,12 +5,16 @@
     "Thor",
     "Spider-Man",
     "Black Widow",
-    "Docteur Strange"
+    "Docteur Strange",
+    "Hulk"
   ],
   "movies": [
     "Avengers (2012)",
     "Captain America: Civil War",
     "Avengers: Infinity War",
-    "Avengers: Endgame"
+    "Avengers: Endgame",
+    "Thor (2011)",
+    "Thor: Le Monde des Ténèbres",
+    "Thor: Ragnarok"
   ]
 }
