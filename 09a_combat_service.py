@@ -11,6 +11,10 @@ from datetime import datetime
 # Le LLM l'utilisera comme un "outil" (Tool Calling).
 # ==============================================================================
 
+#"Compare la force et l'intelligence des héros dans un graphique."
+#"Montre le box-office des films par année sous forme de lignes."
+#"Quels sont nos héros les plus rapides ? (Affiche un graphique)"
+
 app = FastAPI(
     title="Marvel Combat Simulator API",
     description="Une API pour simuler des duels entre super-héros du MCU.",
