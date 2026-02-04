@@ -126,8 +126,8 @@ with st.expander("ℹ️ À propos de cette étape : L'Agent de Gouvernance", ex
             rankdir=LR;
             node [shape=box, fontname="Helvetica", fontsize=10];
             Q [label="Question Métier", shape=ellipse];
-            CatG [label="Catalogue Global\\n(Quelles tables ?)", style=filled, color=orange];
-            CatD [label="Catalogue Détail\\n(Quelles colonnes ?)", style=filled, color=palegreen];
+            CatG [label="Catalogue Global\\n(Exploration)", style=filled, color=orange];
+            CatD [label="Catalogue Détail\\n(Contexte)", style=filled, color=palegreen];
             SQL [label="Génération SQL", style=filled, color=lightblue];
             
             Q -> CatG -> CatD -> SQL;

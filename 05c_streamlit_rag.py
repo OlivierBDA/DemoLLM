@@ -154,6 +154,34 @@ def main():
                     st.text("Aucun document")
 
     st.title("🦸 Demo LLM : Assistant Marvel (Mode RAG)")
+    
+    # ENCART D'INFORMATION
+    with st.expander("ℹ️ À propos de cette étape : Retrieval Augmented Generation", expanded=False):
+        st.markdown("""
+        **Concept : Donner une mémoire au LLM**
+        Ici, l'IA ne répond plus seulement avec ses connaissances générales. Elle consulte une **base de connaissances externe** (Vector DB) avant de parler.
+        
+        **Fonctionnement :**
+        1. **Indexation** : Les fichiers texte sont découpés en morceaux et transformés en vecteurs numériques.
+        2. **Recherche** : On cherche les morceaux les plus proches sémantiquement de votre question.
+        3. **Génération** : Le LLM rédige une réponse en s'appuyant uniquement sur ces extraits.
+        """)
+        st.graphviz_chart('''
+            digraph G {
+                rankdir=LR;
+                node [shape=box, fontname="Helvetica", fontsize=10];
+                Q [label="Question", shape=ellipse];
+                DB [label="Vector DB (FAISS)", style=filled, color=palegreen];
+                LLM [label="LLM (Context Aware)", style=filled, color=orange];
+                Resp [label="Réponse Sourcée", style=filled, color=lightblue];
+                
+                Q -> DB [label="Recherche"];
+                DB -> LLM [label="Context"];
+                Q -> LLM;
+                LLM -> Resp;
+            }
+        ''')
+    
     st.info("Cet assistant utilise uniquement les fiches générées précédemment pour vous répondre.")
 
     # --- CHAT INTERFACE ---

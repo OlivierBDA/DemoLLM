@@ -103,11 +103,14 @@ with st.expander("ℹ️ À propos de cette étape : RAG Structuré", expanded=F
         digraph G {
             rankdir=LR;
             node [shape=box, fontname="Helvetica", fontsize=10];
-            H [label="heroes\\n(Stats, Noms)"];
-            M [label="movies\\n(Box Office, Année)"];
-            A [label="hero_appearances\\n(Lien M:N)", style=dashed];
-            H -> A;
-            M -> A;
+            Q [label="Question", shape=ellipse];
+            LLM [label="LLM (SQL Expert)", style=filled, color=orange];
+            DB [label="SQLite\\n(heroes, movies)", style=filled, color=palegreen];
+            Res [label="Tableau de données", style=filled, color=lightblue];
+            
+            Q -> LLM [label="Natural Language"];
+            LLM -> DB [label="SQL Query"];
+            DB -> Res [label="Pandas DF"];
         }
     ''')
     st.markdown("""
