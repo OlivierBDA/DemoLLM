@@ -10,7 +10,7 @@ from datetime import datetime
 # ASPECT CLÉ : C'est un pur programme Python exposé en API, sans LLM interne.
 # Le LLM l'utilisera comme un "outil" (Tool Calling).
 # ==============================================================================
-
+# .venv\Scripts\python.exe 09a_combat_service.py
 #"Compare la force et l'intelligence des héros dans un graphique."
 #"Montre le box-office des films par année sous forme de lignes."
 #"Quels sont nos héros les plus rapides ? (Affiche un graphique)"

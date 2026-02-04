@@ -4,191 +4,192 @@ import os
 import json
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
-from langchain_core.messages import SystemMessage, HumanMessage
+from langchain_core.messages import SystemMessage, HumanMessage, ToolMessage, AIMessage
+from langchain_core.tools import tool
 
 # ==============================================================================
-# Demo LLM - Étape 9B : Agent avec Appel d'Outils (Tool Calling)
+# Demo LLM - Étape 9B : Agent avec Appel d'Outils Natifs (Native Tool Calling)
 # ==============================================================================
-# ASPECT CLÉ : Cette étape montre comment un Agent décide d'utiliser un outil
-# externe (API REST) pour accomplir une tâche spécifique.
+# ASPECT CLÉ : Cette étape montre comment le LLM "découvre" un outil et décide
+# de l'appeler de lui-même grâce à la fonctionnalité bind_tools.
 # ==============================================================================
+# .venv\Scripts\python.exe -m streamlit run 09b_streamlit_tools.py
+# "Fais s'affronter Hulk et Iron Man !"
+# "Qui gagnerait dans un duel entre Thor et Captain America ?"
 
 API_URL = "http://127.0.0.1:8000/simulate_combat"
 
 # ------------------------------------------------------------------------------
-# SECTION 1 : LOGIQUE DE L'AGENT ET DE L'OUTIL
+# SECTION 1 : DÉFINITION DE L'OUTIL (TOOL)
 # ------------------------------------------------------------------------------
 
-class MarvelCombatAgent:
+@tool
+def simulate_combat(hero1_name: str, hero2_name: str) -> str:
+    """
+    Simule un combat entre deux super-héros Marvel et retourne le résultat JSON.
+    Utilisez cet outil dès que l'utilisateur demande qui gagnerait un duel ou un combat.
+    """
+    print(f"  [EXECUTION TOOL] Appel API pour : {hero1_name} VS {hero2_name}")
+    try:
+        params = {"hero1": hero1_name, "hero2": hero2_name}
+        response = requests.get(API_URL, params=params, timeout=5)
+        if response.status_code == 200:
+            return json.dumps(response.json(), indent=2)
+        return "Erreur : L'API a répondu avec un code d'erreur."
+    except Exception as e:
+        return f"Erreur : Impossible de contacter le service de combat ({e})"
+
+# ------------------------------------------------------------------------------
+# SECTION 2 : CLASSE AGENT AVEC BIND_TOOLS
+# ------------------------------------------------------------------------------
+
+class MarvelNativeToolAgent:
     def __init__(self):
         load_dotenv()
+        # Initialisation du LLM
         self.llm = ChatOpenAI(
             model=os.getenv("LLM_MODEL"),
             api_key=os.getenv("LLM_API_KEY"),
             base_url=os.getenv("LLM_BASE_URL"),
             temperature=0
         )
-
-    def call_combat_api(self, h1: str, h2: str):
-        """Appel réel à l'API REST."""
-        print(f"  [TOOL CALL] Appel de l'API REST : {h1} VS {h2}")
-        try:
-            params = {"hero1": h1, "hero2": h2}
-            response = requests.get(API_URL, params=params, timeout=5)
-            if response.status_code == 200:
-                print("  [TOOL SUCCESS] Données reçues de l'API.")
-                return response.json()
-            else:
-                print(f"  [TOOL ERROR] Code d'erreur : {response.status_code}")
-                return {"error": "L'API de combat a renvoyé une erreur."}
-        except Exception as e:
-            print(f"  [TOOL ERROR] Connexion impossible : {e}")
-            return {"error": "Impossible de contacter l'API de combat (vérifiez qu'elle est lancée)."}
+        
+        # ON LIE L'OUTIL AU MODÈLE
+        self.tools = [simulate_combat]
+        self.llm_with_tools = self.llm.bind_tools(self.tools)
+        
+        self.system_prompt = """Tu es un assistant expert de l'univers Marvel.
+        Tu as accès à un outil de simulation de combat. 
+        Si l'utilisateur demande un duel ou un combat, utilise l'outil 'simulate_combat'.
+        Interprète ensuite les résultats JSON pour faire un récit épique."""
 
     def run(self, user_input: str):
-        """Cycle de raisonnement de l'agent."""
-        print(f"\n[ENTRY] Analyse de l'intention : '{user_input[:40]}...'")
+        print(f"\n[ENTRY] Analyse de la question : '{user_input[:40]}...'")
         
-        # Phase 1 : Détection du besoin d'outil
-        # Pour rester didactique, on utilise un prompt qui demande au LLM d'extraire les paramètres
-        system_detect = """Tu es un assistant Marvel capable d'organiser des combats.
-        Ton rôle est d'analyser si l'utilisateur veut un combat entre deux personnages.
-        
-        Si oui, extrais les deux noms au format JSON: {"combat": true, "hero1": "...", "hero2": "..."}
-        Si non, réponds simplement: {"combat": false}"""
-        
-        print("  [LLM CALL] Détection de l'intention de combat...")
-        res_detect = self.llm.invoke([
-            SystemMessage(content=system_detect),
+        # Les messages pour l'agent
+        messages = [
+            SystemMessage(content=self.system_prompt),
             HumanMessage(content=user_input)
-        ])
-        
-        try:
-            decision = json.loads(res_detect.content.strip().replace("```json", "").replace("```", ""))
-        except:
-            decision = {"combat": False}
+        ]
 
-        if decision.get("combat"):
-            h1, h2 = decision["hero1"], decision["hero2"]
-            print(f"[DECISION] Action requise : Combat détecté ({h1} vs {h2})")
+        # 1. PREMIER APPEL : Le LLM décide s'il utilise un outil
+        print("  [LLM CALL] Le modèle analyse s'il doit utiliser un outil...")
+        ai_msg = self.llm_with_tools.invoke(messages)
+        
+        # Est-ce qu'il y a des appels d'outils ?
+        if ai_msg.tool_calls:
+            print(f"[DECISION] Le LLM appelle l'outil : {ai_msg.tool_calls[0]['name']}")
             
-            # Appel de l'outil
-            api_result = self.call_combat_api(h1, h2)
+            # 2. EXÉCUTION DE L'OUTIL
+            tool_call = ai_msg.tool_calls[0]
+            # On cherche l'outil correspondant (ici on n'en a qu'un)
+            selected_tool = simulate_combat
             
-            # Phase 2 : Génération de la réponse finale avec les données de l'outil
-            print("  [LLM CALL] Interprétation des résultats de l'API...")
-            system_final = "Tu es un commentateur de tournoi Marvel. Utilise les données JSON du combat pour faire un compte-rendu épique."
-            user_final = f"Résultat technique du combat: {json.dumps(api_result)}\n\nFais-en une réponse naturelle."
+            tool_output = selected_tool.invoke(tool_call["args"])
             
-            res_final = self.llm.invoke([
-                SystemMessage(content=system_final),
-                HumanMessage(content=user_final)
+            # On ajoute la décision de l'IA et le résultat de l'outil à l'historique
+            messages.append(ai_msg)
+            messages.append(ToolMessage(tool_output, tool_call_id=tool_call["id"]))
+            
+            # 3. DEUXIÈME APPEL (HYBRIDE) : Synthèse finale
+            print("  [LLM CALL] Le modèle génère le récit final avec les données de l'outil...")
+            
+            # Pour éviter l'erreur Gemini "thought_signature", on ne renvoie pas l'objet technical tool_call.
+            # On crée un nouveau prompt de synthèse qui donne le résultat à l'IA.
+            synthesis_prompt = f"""L'utilisateur a demandé un combat. Voici les résultats obtenus via l'outil technique :
+            {tool_output}
+            
+            Rédige un compte-rendu épique de ce combat pour l'utilisateur."""
+
+            final_response = self.llm.invoke([
+                SystemMessage(content=self.system_prompt),
+                HumanMessage(content=user_input),
+                HumanMessage(content=synthesis_prompt)
             ])
             
             return {
-                "type": "combat",
-                "h1": h1, "h2": h2,
-                "api_data": api_result,
-                "answer": res_final.content
+                "type": "tool",
+                "tool_name": tool_call["name"],
+                "args": tool_call["args"],
+                "raw_result": tool_output,
+                "answer": final_response.content
             }
         else:
-            print("[DECISION] Pas de combat. Réponse standard.")
-            res_std = self.llm.invoke([
-                SystemMessage(content="Tu es un assistant expert Marvel."),
-                HumanMessage(content=user_input)
-            ])
+            print("[DECISION] Pas d'outil requis. Réponse directe.")
             return {
                 "type": "standard",
-                "answer": res_std.content
+                "answer": ai_msg.content
             }
 
 # ------------------------------------------------------------------------------
-# SECTION 2 : INTERFACE STREAMLIT
+# SECTION 3 : INTERFACE STREAMLIT
 # ------------------------------------------------------------------------------
 
-st.set_page_config(page_title="Marvel Tool Agent", page_icon="🛠️", layout="wide")
+st.set_page_config(page_title="Native Tool Calling", page_icon="🤖", layout="wide")
 
-st.title("🥊 Demo LLM - Étape 9 : Tool Calling (API REST)")
+st.title("🤖 Demo LLM - Étape 9 : Native Tool Calling")
 
-# ENCART D'INFORMATION
-with st.expander("ℹ️ À propos de cette étape : L'Appel d'Outils", expanded=False):
+with st.expander("ℹ️ À propos de l'Appel d'Outils Natifs", expanded=False):
     st.markdown("""
-    **Concept : Connecter le LLM au monde réel**
-    Un LLM seul ne peut pas "faire" des choses. Le **Tool Calling** permet à l'agent d'appeler des programmes externes (APIs, calculatrices, moteurs de recherche).
+    **La 'vraie' méthode : bind_tools**
+    Ici le LLM possède officiellement une boîte à outils.
     
-    **Architecture de cette démo :**
-    - Un service **FastAPI** tourne indépendamment (Étape 9a).
-    - L'Agent identifie s'il doit appeler ce service.
-    - Il transforme le JSON technique de l'API en une réponse fluide.
+    1. **Déclaration** : On donne la signature de la fonction au LLM.
+    2. **Autonomie** : Le LLM décide seul s'il doit appeler l'outil ou répondre directement.
+    3. **Protocole** : Utilisation des structures `tool_calls` et `ToolMessage` de LangChain.
     """)
     st.graphviz_chart('''
         digraph G {
             rankdir=LR;
             node [shape=box, fontname="Helvetica", fontsize=10];
-            User [label="Utilisateur", shape=ellipse];
-            Agent [label="Agent LLM", style=filled, color=orange];
-            API [label="API REST Combat\\n(FastAPI)", style=filled, color=palegreen];
+            Q [label="Question", shape=ellipse];
+            LLM [label="LLM (avec bind_tools)", style=filled, color=orange];
+            Tool [label="Fonction simulate_combat", style=filled, color=palegreen];
+            Resp [label="Réponse Finale", style=filled, color=lightblue];
             
-            User -> Agent [label="Organise un combat..."];
-            Agent -> API [label="GET /simulate_combat"];
-            API -> Agent [label="JSON Results"];
-            Agent -> User [label="Réponse épique"];
+            Q -> LLM;
+            LLM -> Tool [label="tool_call"];
+            Tool -> LLM [label="tool_result"];
+            LLM -> Resp;
         }
     ''')
-    st.info("⚠️ Assurez-vous que le service `09a_combat_service.py` est bien lancé dans un terminal séparé !")
+    st.info("💡 Testez: 'Qui gagnerait entre Iron Man et Thor ?' vs 'Comment tu vas ?'")
 
 # Initialisation
-if "combat_agent" not in st.session_state:
-    st.session_state.combat_agent = MarvelCombatAgent()
-    st.session_state.combat_history = []
+if "native_agent" not in st.session_state:
+    st.session_state.native_agent = MarvelNativeToolAgent()
+    st.session_state.native_history = []
 
 # Sidebar
 with st.sidebar:
     st.header("⚙️ Contrôles")
-    if st.button("🆕 Nouvelle discussion", use_container_width=True):
-        st.session_state.combat_history = []
+    if st.button("🆕 Reset", use_container_width=True):
+        st.session_state.native_history = []
         st.rerun()
     st.divider()
-    st.caption(f"Service API : {API_URL}")
+    st.caption("Méthode : Native `bind_tools` (LangChain)")
 
 # Historique
-for msg in st.session_state.combat_history:
+for msg in st.session_state.native_history:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
-        if msg.get("api_call"):
-            st.json(msg["api_call"])
 
 # Input
-if prompt := st.chat_input("Faites combattre deux héros ! (ex: 'Fais battre Iron Man contre Thor')"):
+if prompt := st.chat_input("Défiez l'agent ou posez une question..."):
     st.chat_message("user").markdown(prompt)
-    st.session_state.combat_history.append({"role": "user", "content": prompt})
+    st.session_state.native_history.append({"role": "user", "content": prompt})
 
     with st.chat_message("assistant"):
-        with st.status("L'agent analyse votre demande...", expanded=True) as status:
-            result = st.session_state.combat_agent.run(prompt)
+        with st.status("L'agent réfléchit...", expanded=True) as status:
+            result = st.session_state.native_agent.run(prompt)
             
-            if result["type"] == "combat":
-                st.write(f"🎯 **Intention détectée** : Combat entre {result['h1']} et {result['h2']}")
-                st.write("📡 **Action** : Appel de l'API de simulation...")
-                if "error" in result["api_data"]:
-                    st.error(result["api_data"]["error"])
-                else:
-                    st.success(f"🏆 Vainqueur identifié : {result['api_data']['winner']}")
-            else:
-                st.write("💬 **Intention** : Discussion standard (pas de combat).")
+            if result["type"] == "tool":
+                st.write(f"🛠️ **Outil utilisé** : `{result['tool_name']}`")
+                st.write(f"📝 **Arguments identifiés** : `{result['args']}`")
+                with st.expander("Données brutes de l'outil"):
+                    st.code(result["raw_result"], language="json")
             
             status.update(label="Analyse terminée", state="complete", expanded=False)
 
         st.markdown(result["answer"])
-        
-        # Si c'était un combat, on montre le JSON technique en dessous pour la démo
-        api_data = result.get("api_data") if result["type"] == "combat" else None
-        if api_data:
-            with st.expander("🔍 Voir la réponse brute de l'API (JSON)"):
-                st.json(api_data)
-
-        st.session_state.combat_history.append({
-            "role": "assistant", 
-            "content": result["answer"],
-            "api_call": api_data
-        })
+        st.session_state.native_history.append({"role": "assistant", "content": result["answer"]})
