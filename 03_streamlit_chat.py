@@ -10,6 +10,7 @@ from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 # Ce programme offre une interface web professionnelle pour la conversation.
 # ASPECT CLÉ : Séparation stricte entre le "Core LLM" et l'interface "Streamlit".
 # ==============================================================================
+# python -m streamlit run 03_streamlit_chat.py
 
 # ------------------------------------------------------------------------------
 # SECTION 1 : LOGIQUE COEUR LLM (LangChain)

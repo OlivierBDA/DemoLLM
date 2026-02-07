@@ -13,6 +13,7 @@ from langchain_core.messages import SystemMessage, HumanMessage
 # ASPECT CLÉ : Cette étape montre comment le LLM peut non seulement extraire
 # des données mais aussi choisir la meilleure façon de les représenter.
 # ==============================================================================
+# Affiche les caractéristiques agrégées de chaque super héros. Chacune des caractéristiques doit avoir une couleur distincte.
 
 DB_PATH = os.path.join("data", "marvel_data.db")
 
@@ -58,7 +59,8 @@ class MarvelVisualAgent:
         Détermine si un graphique est pertinent.
         Types possibles : 'bar' (comparaisons), 'line' (évolution temporelle), 'area', 'none'.
         
-        Réponds en JSON : {"viz_type": "...", "reasoning": "...", "x_axis": "nom_colonne", "y_axis": "nom_colonne"}"""
+        Réponds en JSON : {"viz_type": "...", "reasoning": "...", "x_axis": "nom_colonne", "y_axis": "nom_colonne_ou_liste"}
+        - Pour y_axis, si plusieurs colonnes sont nécessaires (ex: comparer plusieurs stats), fournis une liste ou les noms séparés par des virgules. """
         
         context = f"Question: {question}\nColonnes dispo: {list(data.columns)}"
         
@@ -90,6 +92,22 @@ with st.expander("ℹ️ À propos de cette étape : L'IA au service de la donn�
     2. Identifie si un graphique est pertinent (ex: pour comparer des forces).
     3. Configure automatiquement les axes et le type de graphique (Barres, Lignes, etc.).
     """)
+    st.graphviz_chart('''
+        digraph G {
+            rankdir=LR;
+            node [shape=box, fontname="Helvetica", fontsize=10];
+            Q [label="Question", shape=ellipse];
+            SQL [label="LLM (Phase 1: SQL)", style=filled, color=orange];
+            DB [label="SQLite DB", style=filled, color=palegreen];
+            VIZ [label="LLM (Phase 2: Viz)", style=filled, color=orange];
+            Chart [label="Streamlit Chart", style=filled, color=lightblue];
+            
+            Q -> SQL;
+            SQL -> DB;
+            DB -> VIZ [label="Pandas DF"];
+            VIZ -> Chart [label="JSON Config"];
+        }
+    ''')
     st.image("https://img.icons8.com/fluency/96/combo-chart.png", width=50)
 
 # Initialisation
@@ -112,10 +130,15 @@ for entry in st.session_state.viz_history:
     with st.chat_message("assistant"):
         # 1. Graphique d'abord
         if entry["viz"]:
+            # Préparation des colonnes Y (cas multi-colonnes)
+            y_cols = entry["viz"]["y_axis"]
+            if isinstance(y_cols, str) and "," in y_cols:
+                y_cols = [c.strip() for c in y_cols.split(",")]
+
             if entry["viz"]["viz_type"] == "bar":
-                st.bar_chart(entry["data"].set_index(entry["viz"]["x_axis"])[entry["viz"]["y_axis"]], height=400)
+                st.bar_chart(entry["data"].set_index(entry["viz"]["x_axis"])[y_cols], height=400)
             elif entry["viz"]["viz_type"] == "line":
-                st.line_chart(entry["data"].set_index(entry["viz"]["x_axis"])[entry["viz"]["y_axis"]], height=400)
+                st.line_chart(entry["data"].set_index(entry["viz"]["x_axis"])[y_cols], height=400)
             
             # 2. Explication ensuite
             st.info(f"💡 **Raisonnement** : {entry['viz']['reasoning']}")
@@ -156,15 +179,20 @@ if prompt := st.chat_input("Demandez une analyse (ex: 'Compare la force et l'int
             if viz_config and viz_config.get("viz_type") != "none":
                 try:
                     x = viz_config["x_axis"]
-                    y = viz_config["y_axis"]
+                    y_cols = viz_config["y_axis"]
+                    
+                    # Gestion multi-colonnes (string -> list)
+                    if isinstance(y_cols, str) and "," in y_cols:
+                        y_cols = [c.strip() for c in y_cols.split(",")]
+                        
                     plot_df = df.set_index(x)
                     
                     if viz_config["viz_type"] == "bar":
-                        st.bar_chart(plot_df[y], height=400)
+                        st.bar_chart(plot_df[y_cols], height=400)
                     elif viz_config["viz_type"] == "line":
-                        st.line_chart(plot_df[y], height=400)
+                        st.line_chart(plot_df[y_cols], height=400)
                     elif viz_config["viz_type"] == "area":
-                        st.area_chart(plot_df[y], height=400)
+                        st.area_chart(plot_df[y_cols], height=400)
                     
                     # 2. AFFICHAGE : RAISONNEMENT
                     st.info(f"💡 **Pourquoi ce graphique ?** {viz_config['reasoning']}")
