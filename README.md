@@ -2,12 +2,12 @@
 
 Bienvenue dans ce dépôt pédagogique conçu pour explorer et démontrer les capacités des Large Language Models (LLM) à travers un cas d'usage concret : l'univers **Marvel**.
 
-Ce projet est structuré comme une progression par étapes, partant d'un simple appel API pour aboutir à un **Agent Intelligent** capable de manipuler du SQL, d'appeler des outils tiers (APIs REST) et de générer des visualisations de données.
+Ce projet est structuré comme une progression par phases, partant d'un simple appel API pour aboutir à un **Agent Intelligent** utilisant le protocole MCP.
 
 ---
 
 ## 🏗️ Architecture & Philosophie
-Le dépôt est organisé de manière incrémentale. Chaque étape est souvent auto-suffisante pour faciliter la lecture du code et la compréhension des concepts techniques.
+Le dépôt est organisé de manière incrémentale par **Phases**. Chaque étape est souvent auto-suffisante pour faciliter la lecture du code et la compréhension des concepts techniques.
 
 **Technologies utilisées :**
 - **LangChain** (Orchestration LLM & Tools)
@@ -16,105 +16,54 @@ Le dépôt est organisé de manière incrémentale. Chaque étape est souvent au
 - **Streamlit** (Interfaces Web)
 - **SQLite** (Données structurées)
 - **FAISS** (Base de données vectorielle)
+- **Model Context Protocol (MCP)** (Standardisation des outils)
 
 ---
 
 ## 🚀 Guide de Démarrage Rapide
 
-1. **Configuration :** Créez un fichier `.env` à la racine avec les variables suivantes :
-   ```env
-   LLM_MODEL=votre_model_name
-   LLM_API_KEY=votre_cle_api
-   LLM_BASE_URL=url_du_endpoint
-   ```
-2. **Installation :** Installez les dépendances via votre gestionnaire Python (recommandé : virtual env).
+1. **Configuration :** Créez un fichier `.env` à la racine avec les variables LLM.
+2. **Installation :** Installez les dépendances via votre gestionnaire Python dans `.venv`.
    ```bash
-   pip install langchain langchain-openai langchain-community langgraph streamlit pandas fastapi uvicorn fastembed faiss-cpu
+   pip install langchain langchain-openai langchain-community langgraph streamlit pandas fastapi uvicorn fastembed faiss-cpu mcp
    ```
 
 ---
 
-## 🪜 Les 10 Étape de la Démo
+## 🪜 Structure de la Démo
 
-### Phase 1 : Interactions Fondamentales
-*   **Étape 1 : Le Premier Appel**  
-    `python 01_simple_api.py`  
-    Appel direct au LLM sans mémoire.
-    ![Question et Réponse](doc/01_simple_api_Question_et_reponse.png)
+### Phase A : Fondations et Intégration Directe
+*   **A01 : Le Premier Appel** (`python A01_simple_api.py`) - Appel direct sans mémoire.
+*   **A02 : Conversation en Terminal** (`python A02_chat_terminal.py`) - Introduction de la mémoire.
+*   **A03 : Première Interface Graphique** (`streamlit run A03_streamlit_chat.py`) - Migration vers UI Web.
 
-*   **Étape 2 : Conversation en Terminal**  
-    `python 02_chat_terminal.py`  
-    Introduction de l'historique de conversation (Memory).
-    ![Conversation Terminal](doc/02_chat_terminal_conversation.png)
+### Phase B : Contextualisation et Données Métier (RAG)
+*   **B01 : Génération de Données** (`python B01_generate_data.py`) - Création de fiches .txt.
+*   **B02 : Mise en place du RAG** 
+    - `python B02a_create_vector_db.py` (Indexation)
+    - `streamlit run B02c_streamlit_rag.py` (Interface)
+*   **B03 : Routage Intelligent** (`streamlit run B03_langgraph_routing.py`) - Utilisation de LangGraph pour décider du flux.
 
-*   **Étape 3 : Première Interface Graphique**  
-    `streamlit run 03_streamlit_chat.py`  
-    Migration vers une UI Web avec streaming des réponses.
-    
-    **Architecture & Rendu :**  
-    ![Diagramme Étape 3](doc/03_streamlit_chat_diagramme.png)
-    ![Capture UI Étape 3](doc/03_streamlit_chat_conversation.png)
+### Phase C : Données Structurées et Intelligence Relationnelle (SQL)
+*   **C01 : Text-to-SQL**
+    - `python C01a_setup_marvel_sql.py` (Setup DB)
+    - `streamlit run C01b_streamlit_sql.py` (Interface)
+*   **C02 : Gouvernance & Catalogue**
+    - `python C02a_setup_catalog.py` (Setup Catalog)
+    - `streamlit run C02b_streamlit_catalog.py` (Interface)
 
-### Phase 2 : RAG (Retrieval Augmented Generation)
-*   **Étape 4 : Génération de Données**  
-    `python 04_generate_data.py`  
-    Création de fiches descriptives Marvel (.txt) pour la base de connaissances.
-*   **Étape 5 : Mise en place du RAG**  
-    `python 05a_create_vector_db.py` (Indexation)  
-    `streamlit run 05c_streamlit_rag.py` (Interface)  
-    Donner une "mémoire documentaire" au LLM via une base vectorielle FAISS.
-    
-    **Concept & Interface :**  
-    ![Diagramme RAG](doc/05_query_rag_diagramme.png)
-    ![Capture RAG](doc/05_query_rag_conversation.png)
+### Phase D : Interaction et Action (Tool Calling)
+*   **D01 : Tool Calling (API REST)**
+    - `python D01a_combat_service.py` (Lancement API)
+    - `streamlit run D01b_streamlit_tools.py` (Interface Agent)
+*   **D02 : Visualisations Dynamiques** (`streamlit run D02_streamlit_charts.py`) - Graphiques générés par l'agent.
 
-*   **Étape 6 : Routage Intelligent**  
-    `streamlit run 06_langgraph_routing.py`  
-    Utilisation de **LangGraph** pour décider si la question nécessite le RAG ou une réponse générale.
-    
-    **Logique & Exemples de routage :**  
-    ![Diagramme LangGraph](doc/06_langgraph_routing_diagramme.png)
-    ![Branche Domaine](doc/06_langgraph_routing_branche_domaine.png)
-    ![Branche Hors Domaine](doc/06_langgraph_routing_branche_hors_domaine.png)
-
-### Phase 3 : Données Structurées & SQL
-*   **Étape 7 : Text-to-SQL**  
-    `python 07a_setup_marvel_sql.py` (Setup DB)  
-    `streamlit run 07b_streamlit_sql.py` (Interface)  
-    Le LLM interroge une base SQLite en traduisant le langage naturel en requêtes SQL.
-    
-    **Flux SQL :**  
-    ![Diagramme SQL](doc/07_streamlit_sql_diagramme.png)
-    ![Capture SQL](doc/07_streamlit_sql_tableau.png)
-
-*   **Étape 8 : Gouvernance & Catalogue**  
-    `python 08a_setup_catalog.py` (Setup Catalog)  
-    `streamlit run 08b_streamlit_catalog.py` (Interface)  
-    Simulation d'un environnement d'entreprise où le LLM utilise un **Catalogue de Métadonnées** pour explorer une base inconnue.
-    
-    **Exploration du Catalogue :**  
-    ![Diagramme Catalogue](doc/08_streamlit_catalog_diagramme.png)
-    ![Capture Catalogue](doc/08_streamlit_catalog_tableau.png)
-
-### Phase 4 : Capabilities Avancées
-*   **Étape 9 : Tool Calling (API REST)**  
-    `python 09a_combat_service.py` (Lancement de l'API REST)  
-    `streamlit run 09b_streamlit_tools.py` (Interface Agent)  
-    L'Agent utilise le **Native Tool Calling** pour appeler un service de combat externe via HTTP.
-    
-    **Appels d'Outils :**  
-    ![Diagramme Tools](doc/09_streamlit_tools_diagramme.png)
-    ![Capture Tools](doc/09_streamlit_tools_conversation.png)
-
-*   **Étape 10 : Visualisations Dynamiques**  
-    `streamlit run 10_streamlit_charts.py`  
-    L'agent décide de la meilleure représentation graphique (Barres, Lignes) pour afficher les données demandées.
-    
-    **Raisonnement Visuel :**  
-    ![Diagramme Charts](doc/10_streamlit_charts_diagramme.png)
-    ![Capture Charts](doc/10_streamlit_charts_graphique.png)
+### Phase E : Model Context Protocol (MCP)
+*   **E01 : Introduction au MCP**
+    - `python E01a_mcp_server.py` (Serveur de Ressources/Tools)
+    - `streamlit run E01b_streamlit_mcp.py` (Explorateur de capacités)
 
 ---
 
 ## 🎯 Note pour NotebookLM
-Ce dépôt est optimisé pour être analysé par **NotebookLM**. Les commentaires dans le code (ASPECT CLÉ) et la structure hiérarchique permettent au moteur de Google de reconstruire la logique pédagogique et de fournir des résumés précis sur l'évolution de la complexité des agents conversationnels.
+Ce dépôt est optimisé pour être analysé par **NotebookLM** afin de reconstruire la logique pédagogique de l'évolution des agents.

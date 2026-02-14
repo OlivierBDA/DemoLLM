@@ -68,7 +68,7 @@ def perform_rag_query(llm, vector_db, query):
 # ------------------------------------------------------------------------------
 
 def main():
-    print("--- Demo LLM - Étape 5B : RAG (Interface FastEmbed) ---")
+    print("--- Demo LLM - Phase B : Étape 2b : Requêtage RAG (Terminal) ---")
     
     try:
         llm, vector_db = init_rag_components()

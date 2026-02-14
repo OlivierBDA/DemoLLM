@@ -13,7 +13,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
 # ==============================================================================
-# Demo LLM - Étape 5C : Interface Graphique RAG (Streamlit)
+# Demo LLM - Phase B : Étape 2c : Interface RAG (Streamlit)
 # ==============================================================================
 # ASPECT CLÉ : Cette interface combine le Chat et le RAG. Elle permet également
 # de piloter l'ingestion des données depuis la barre latérale.

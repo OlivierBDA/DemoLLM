@@ -12,7 +12,7 @@ from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langgraph.graph import StateGraph, END
 
 # ==============================================================================
-# Demo LLM - Étape 6 : Routage intelligent avec LangGraph
+# Demo LLM - Phase B : Étape 3 : Routage Intelligent (LangGraph)
 # ==============================================================================
 # ASPECT CLÉ : Cette étape est AUTO-SUFFISANTE. Toute la logique (RAG, Graphe,
 # Routage et UI) est contenue dans ce fichier pour faciliter la compréhension.

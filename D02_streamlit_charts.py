@@ -8,7 +8,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 
 # ==============================================================================
-# Demo LLM - Étape 10 : Visualisations Dynamiques
+# Demo LLM - Phase D : Étape 2 : Visualisations Dynamiques
 # ==============================================================================
 # ASPECT CLÉ : Cette étape montre comment le LLM peut non seulement extraire
 # des données mais aussi choisir la meilleure façon de les représenter.

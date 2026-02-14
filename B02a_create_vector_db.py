@@ -7,7 +7,8 @@ from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 from langchain_community.vectorstores import FAISS
 
 # ==============================================================================
-# Demo LLM - Étape 5A : Construction de la Base Vectorielle (FAISS + FastEmbed)
+# Demo LLM - Phase B : Étape 2a : Création de la Base Vectorielle (Indexation)
+# FAISS + FastEmbed)
 # ==============================================================================
 # Aspect Clé : Utilisation de FastEmbed (ONNX) à la place de PyTorch pour 
 # éviter les erreurs de DLL sur Windows. C'est plus léger et rapide.

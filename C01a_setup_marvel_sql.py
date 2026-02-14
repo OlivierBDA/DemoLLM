@@ -3,7 +3,7 @@ import os
 import csv
 
 # ==============================================================================
-# Demo LLM - Étape 7A : Création et Alimentation de la base SQL (via CSV)
+# Demo LLM - Phase C : Étape 1a : Setup SQL Marvel (Données Structurées)
 # ==============================================================================
 # Ce script initialise la base de données en lisant des fichiers CSV externes.
 # ASPECT CLÉ : Séparation des données et de la logique pour plus de clarté.

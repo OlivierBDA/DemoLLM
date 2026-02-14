@@ -34,7 +34,7 @@ def main():
         temperature=0.7
     )
 
-    print(f"--- Demo LLM - Étape 1 : Appel Simple (Interface Standard) ---")
+    print(f"--- Demo LLM - Phase A : Étape 1 : Appel Simple ---")
     print(f"Configuration : Modèle = {model_name} | Endpoint = {base_url}")
     
     # Saisie du prompt

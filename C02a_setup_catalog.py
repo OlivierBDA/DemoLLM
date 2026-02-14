@@ -3,7 +3,7 @@ import os
 import csv
 
 # ==============================================================================
-# Demo LLM - Étape 8A : Initialisation du Catalogue de Métadonnées (Gouvernance)
+# Demo LLM - Phase C : Étape 2a : Setup Catalogue (Gouvernance)
 # ==============================================================================
 # Ce script crée deux tables de métadonnées pour aider le LLM à naviguer 
 # dans la base sans connaître les noms techniques a priori.

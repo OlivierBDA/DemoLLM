@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 
 # ==============================================================================
-# Demo LLM - Étape 9A : Service REST de Combat (Outil Externe)
+# Demo LLM - Phase D : Étape 1a : Combat Service (API REST externe)
 # ==============================================================================
 # Ce service simule un combat entre deux héros.
 # ASPECT CLÉ : C'est un pur programme Python exposé en API, sans LLM interne.

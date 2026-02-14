@@ -7,7 +7,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 
 # ==============================================================================
-# Demo LLM - Étape 8 : SQL Avancé avec Catalogue de Métadonnées
+# Demo LLM - Phase C : Étape 2b : Interface Catalogue (Streamlit)
 # ==============================================================================
 # ASPECT CLÉ : Cette étape montre comment un LLM peut naviguer dans une base
 # inconnue en utilisant une couche sémantique (Catalogue de données).

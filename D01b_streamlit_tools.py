@@ -127,7 +127,7 @@ class MarvelNativeToolAgent:
 
 st.set_page_config(page_title="Native Tool Calling", page_icon="🤖", layout="wide")
 
-st.title("🤖 Demo LLM - Étape 9 : Native Tool Calling")
+st.title("🤖 Demo LLM - Phase D : Étape 1b : Agent avec Tool Calling")
 
 with st.expander("ℹ️ À propos de l'Appel d'Outils Natifs", expanded=False):
     st.markdown("""

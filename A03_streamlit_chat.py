@@ -5,7 +5,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
 # ==============================================================================
-# Demo LLM - Étape 3 : Interface Graphique (Streamlit)
+# Demo LLM - Phase A : Étape 3 : Interface Graphique (Streamlit)
 # ==============================================================================
 # Ce programme offre une interface web professionnelle pour la conversation.
 # ASPECT CLÉ : Séparation stricte entre le "Core LLM" et l'interface "Streamlit".

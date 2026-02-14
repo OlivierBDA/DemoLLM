@@ -7,7 +7,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 
 # ==============================================================================
-# Demo LLM - Étape 7B : RAG SQL (Text-to-SQL)
+# Demo LLM - Phase C : Étape 1b : Interface SQL (Streamlit)
 # ==============================================================================
 # ASPECT CLÉ : Cette étape démontre la capacité du LLM à comprendre une structure
 # de données relationnelle et à générer du code SQL valide.

@@ -4,7 +4,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
 # ==============================================================================
-# Demo LLM - Étape 2 : Mode Chat avec Continuité de Conversation
+# 🦸 Demo LLM - Phase A : Étape 2 : Conversation en Terminal
 # ==============================================================================
 # Ce programme permet d'avoir une conversation interactive avec le LLM.
 # ASPECT CLÉ : Contrairement à l'étape 1, nous conservons la liste des messages

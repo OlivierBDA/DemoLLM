@@ -5,7 +5,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
 
 # ==============================================================================
-# Demo LLM - Étape 4 : Génération de Données Sources pour le RAG
+# Demo LLM - Phase B : Étape 1 : Génération de Données (Préparation RAG)
 # ==============================================================================
 # Ce programme génère des fiches descriptives détaillées sur l'univers MCU.
 # ASPECT CLÉ : Chaque fichier est généré de manière autonome et incrémentale.
