@@ -1,157 +1,103 @@
 import asyncio
-import os
-from typing import Any
+import random
 from mcp.server.models import InitializationOptions
 from mcp.server import NotificationOptions, Server
-from mcp.server.stdio import stdio_server
+from mcp.server.sse import SseServerTransport
 import mcp.types as types
-import sqlite3
-import pandas as pd
+from starlette.applications import Starlette
+from starlette.routing import Route, Mount
+from starlette.responses import Response
+import uvicorn
 
-# Initialisation du serveur MCP
-server = Server("marvel-mcp-server")
+# ==============================================================================
+# Demo LLM - Phase E : Étape 1a : Le Serveur MCP (Version RÉSEAU / SSE)
+# ==============================================================================
+# ASPECT CLÉ : Le serveur est désormais un service HTTP indépendant.
+# Il écoute sur un port et attend des connexions SSE.
+# ==============================================================================
 
-# --- Phase E : Étape 1 : Le Serveur MCP ---
-# Les ressources sont des données statiques ou dynamiques accessibles en lecture seule.
-@server.list_resources()
-async def handle_list_resources() -> list[types.Resource]:
-    """Liste les fiches personnages disponibles."""
-    resources = []
-    data_path = "data/source_files"
-    if os.path.exists(data_path):
-        for file in os.listdir(data_path):
-            if file.startswith("hero_") and file.endswith(".txt"):
-                hero_id = file.replace("hero_", "").replace(".txt", "")
-                resources.append(
-                    types.Resource(
-                        uri=f"marvel://character/{hero_id}",
-                        name=f"Fiche de {hero_id.replace('_', ' ').title()}",
-                        description=f"Données brutes pour le personnage {hero_id}",
-                        mimeType="text/plain",
-                    )
-                )
-    return resources
+server = Server("marvel-combat-server")
 
-@server.read_resource()
-async def handle_read_resource(uri: str) -> str:
-    """Lit le contenu d'une fiche personnage via son URI marvel://."""
-    if not uri.startswith("marvel://character/"):
-        raise ValueError(f"URI inconnue : {uri}")
-    
-    hero_id = uri.replace("marvel://character/", "")
-    file_path = f"data/source_files/hero_{hero_id}.txt"
-    
-    if os.path.exists(file_path):
-        with open(file_path, "r", encoding="utf-8") as f:
-            return f.read()
-    raise ValueError(f"Personnage non trouvé : {hero_id}")
-
-# --- CONCEPTS MCP 2 : LES OUTILS (TOOLS) ---
-# Les outils sont des fonctions que le LLM peut appeler.
 @server.list_tools()
 async def handle_list_tools() -> list[types.Tool]:
-    """Définit les capacités d'action."""
     return [
         types.Tool(
-            name="query_marvel_db",
-            description="Exécute une requête SQL SELECT sur la base Marvel (tables: heroes, movies, hero_appearances).",
+            name="resolve_combat",
+            description="Détermine le vainqueur d'un combat entre deux héros Marvel.",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "sql_query": {"type": "string", "description": "La requête SQL SELECT validée."}
+                    "hero1": {"type": "string", "description": "Nom du premier combattant"},
+                    "hero2": {"type": "string", "description": "Nom du deuxième combattant"}
                 },
-                "required": ["sql_query"],
+                "required": ["hero1", "hero2"],
             },
-        ),
-        types.Tool(
-            name="calculate_power_level",
-            description="Simule un calcul de puissance basé sur l'ID du héros.",
-            inputSchema={
+            outputSchema={
                 "type": "object",
                 "properties": {
-                    "hero_name": {"type": "string", "description": "Nom du héros."}
+                    "winner": {"type": "string", "description": "Nom du vainqueur"},
+                    "reason": {"type": "string", "description": "Explication de la victoire"},
+                    "points": {"type": "integer", "description": "Points de domination (0-100)"}
                 },
-                "required": ["hero_name"],
-            },
+                "required": ["winner", "reason", "points"]
+            }
         )
     ]
 
 @server.call_tool()
 async def handle_call_tool(
     name: str, arguments: dict | None
-) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
-    """Exécute l'outil demandé."""
-    if name == "query_marvel_db":
-        sql = arguments.get("sql_query")
-        try:
-            conn = sqlite3.connect("data/marvel_data.db")
-            df = pd.read_sql_query(sql, conn)
-            conn.close()
-            return [types.TextContent(type="text", text=df.to_markdown())]
-        except Exception as e:
-            return [types.TextContent(type="text", text=f"Erreur SQL : {str(e)}")]
-            
-    elif name == "calculate_power_level":
-        hero = arguments.get("hero_name", "Inconnu")
-        # Logique bidon pour la démo
-        power = len(hero) * 10 
-        return [types.TextContent(type="text", text=f"Puissance estimée de {hero} : {power}/100")]
+) -> types.CallToolResult:
+    if name == "resolve_combat":
+        h1 = arguments.get("hero1", "Inconnu 1")
+        h2 = arguments.get("hero2", "Inconnu 2")
+        winner = random.choice([h1, h2])
+        reason = random.choice([
+            "grâce à une force brute supérieure.",
+            "en utilisant une stratégie plus fine.",
+            "grâce à son équipement technologique."
+        ])
+        points = random.randint(50, 100)
         
+        result_text = f"Le vainqueur est **{winner}** {reason} (Score: {points})"
+        structured_data = {"winner": winner, "reason": reason, "points": points}
+        
+        return types.CallToolResult(
+            content=[types.TextContent(type="text", text=result_text)],
+            structuredContent=structured_data
+        )
     raise ValueError(f"Outil inconnu : {name}")
 
-# --- CONCEPTS MCP 3 : LES PROMPTS ---
-# Les prompts sont des modèles réutilisables.
-@server.list_prompts()
-async def handle_list_prompts() -> list[types.Prompt]:
-    """Liste les prompts pré-configurés."""
-    return [
-        types.Prompt(
-            name="analyse_combat",
-            description="Un prompt pour analyser un combat entre deux héros.",
-            arguments=[
-                types.PromptArgument(name="hero1", description="Premier héros", required=True),
-                types.PromptArgument(name="hero2", description="Second héros", required=True),
-            ],
-        )
-    ]
+# --- CONFIGURATION DU TRANSPORT SSE ---
+sse = SseServerTransport("/messages/")
 
-@server.get_prompt()
-async def handle_get_prompt(
-    name: str, arguments: dict[str, str] | None
-) -> types.GetPromptResult:
-    """Retourne le contenu du prompt."""
-    if name == "analyse_combat":
-        h1 = arguments.get("hero1")
-        h2 = arguments.get("hero2")
-        return types.GetPromptResult(
-            description="Analyse de combat",
-            messages=[
-                types.PromptMessage(
-                    role="user",
-                    content=types.TextContent(
-                        type="text",
-                        text=f"En utilisant tes outils et ressources, compare les forces de {h1} et {h2} et prédis le vainqueur."
-                    ),
-                )
-            ],
-        )
-    raise ValueError(f"Prompt inconnu : {name}")
-
-async def main():
-    # Run the server using stdin/stdout streams
-    async with stdio_server() as (read_stream, write_stream):
+async def handle_sse(request):
+    """Gère la connexion SSE initiale."""
+    async with sse.connect_sse(
+        request.scope, request.receive, request._send
+    ) as (read_stream, write_stream):
         await server.run(
             read_stream,
             write_stream,
             InitializationOptions(
-                server_name="marvel-mcp",
-                server_version="0.1.0",
+                server_name="marvel-combat",
+                server_version="1.0.0",
                 capabilities=server.get_capabilities(
                     notification_options=NotificationOptions(),
                     experimental_capabilities={},
                 ),
             ),
         )
+    return Response()
+
+# --- APPLICATION STARLETTE ---
+starlette_app = Starlette(
+    routes=[
+        Route("/sse", endpoint=handle_sse, methods=["GET"]),
+        Mount("/messages/", app=sse.handle_post_message),
+    ]
+)
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    print("🚀 Serveur MCP Marvel Combat démarré sur http://127.0.0.1:8000")
+    uvicorn.run(starlette_app, host="127.0.0.1", port=8000)
