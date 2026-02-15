@@ -20,6 +20,7 @@ server = Server("marvel-combat-server")
 
 @server.list_tools()
 async def handle_list_tools() -> list[types.Tool]:
+    print("  [MCP SERVER] Discovery: Le client demande la liste des outils.")
     return [
         types.Tool(
             name="resolve_combat",
@@ -48,6 +49,7 @@ async def handle_list_tools() -> list[types.Tool]:
 async def handle_call_tool(
     name: str, arguments: dict | None
 ) -> types.CallToolResult:
+    print(f"  [MCP SERVER] Execution: Appel de l'outil '{name}' avec les paramètres : {arguments}")
     if name == "resolve_combat":
         h1 = arguments.get("hero1", "Inconnu 1")
         h2 = arguments.get("hero2", "Inconnu 2")
