@@ -1,69 +1,125 @@
 # 🦸 Demo LLM : Le Voyage de l'Apprenti AI-Agent
 
-Bienvenue dans ce dépôt pédagogique conçu pour explorer et démontrer les capacités des Large Language Models (LLM) à travers un cas d'usage concret : l'univers **Marvel**.
+Bienvenue dans ce dépôt pédagogique conçu pour explorer et démontrer les capacités des Large Language Models (LLM) à travers un cas d'usage fil rouge ludique : l'univers **Marvel**.
 
-Ce projet est structuré comme une progression par phases, partant d'un simple appel API pour aboutir à un **Agent Intelligent** utilisant le protocole MCP.
+Ce projet est conçu pour être **didactique** et **progressif**. Il part d'un simple appel API pour aboutir à une architecture d'entreprise complexe utilisant des agents autonomes et le protocole **MCP (Model Context Protocol)**.
 
 ---
 
 ## 🏗️ Architecture & Philosophie
-Le dépôt est organisé de manière incrémentale par **Phases**. Chaque étape est souvent auto-suffisante pour faciliter la lecture du code et la compréhension des concepts techniques.
 
-**Technologies utilisées :**
-- **LangChain** (Orchestration LLM & Tools)
-- **LangGraph** (Routage complexe & Orchestration d'états)
-- **FastAPI** (Service REST externe)
-- **Streamlit** (Interfaces Web)
-- **SQLite** (Données structurées)
-- **FAISS** (Base de données vectorielle)
-- **Model Context Protocol (MCP)** (Standardisation des outils)
+*   **Approche Pas-à-Pas** : Le code est découpé en **Phases (A à E)**, elles-mêmes divisées en **Étapes numérotées**.
+*   **Indépendance** : Chaque script est conçu pour être le plus autonome possible.
+*   **Séparation Logic/UI** : Distinguo clair entre le cerveau (Serveur/Scripts) et les muscles (Streamlit).
+*   **Aesthetics First** : Les interfaces visent un rendu premium pour une expérience utilisateur moderne.
 
 ---
 
-## 🚀 Guide de Démarrage Rapide
+## 🚀 Guide de Démarrage
 
-1. **Configuration :** Créez un fichier `.env` à la racine avec les variables LLM.
-2. **Installation :** Installez les dépendances via votre gestionnaire Python dans `.venv`.
-   ```bash
-   pip install langchain langchain-openai langchain-community langgraph streamlit pandas fastapi uvicorn fastembed faiss-cpu mcp
-   ```
-
----
-
-## 🪜 Structure de la Démo
-
-### Phase A : Fondations et Intégration Directe
-*   **A01 : Le Premier Appel** (`python A01_simple_api.py`) - Appel direct sans mémoire.
-*   **A02 : Conversation en Terminal** (`python A02_chat_terminal.py`) - Introduction de la mémoire.
-*   **A03 : Première Interface Graphique** (`streamlit run A03_streamlit_chat.py`) - Migration vers UI Web.
-
-### Phase B : Contextualisation et Données Métier (RAG)
-*   **B01 : Génération de Données** (`python B01_generate_data.py`) - Création de fiches .txt.
-*   **B02 : Mise en place du RAG** 
-    - `python B02a_create_vector_db.py` (Indexation)
-    - `streamlit run B02c_streamlit_rag.py` (Interface)
-*   **B03 : Routage Intelligent** (`streamlit run B03_langgraph_routing.py`) - Utilisation de LangGraph pour décider du flux.
-
-### Phase C : Données Structurées et Intelligence Relationnelle (SQL)
-*   **C01 : Text-to-SQL**
-    - `python C01a_setup_marvel_sql.py` (Setup DB)
-    - `streamlit run C01b_streamlit_sql.py` (Interface)
-*   **C02 : Gouvernance & Catalogue**
-    - `python C02a_setup_catalog.py` (Setup Catalog)
-    - `streamlit run C02b_streamlit_catalog.py` (Interface)
-
-### Phase D : Interaction et Action (Tool Calling)
-*   **D01 : Tool Calling (API REST)**
-    - `python D01a_combat_service.py` (Lancement API)
-    - `streamlit run D01b_streamlit_tools.py` (Interface Agent)
-*   **D02 : Visualisations Dynamiques** (`streamlit run D02_streamlit_charts.py`) - Graphiques générés par l'agent.
-
-### Phase E : Model Context Protocol (MCP)
-*   **E01 : Introduction au MCP**
-    - `python E01a_mcp_server.py` (Serveur de Ressources/Tools)
-    - `streamlit run E01b_streamlit_mcp.py` (Explorateur de capacités)
+1.  **Installation** :
+    ```bash
+    python -m venv .venv
+    .venv\Scripts\activate
+    pip install -r requirements.txt
+    ```
+2.  **Configuration** :
+    Créez un fichier `.env` :
+    ```env
+    LLM_MODEL=gpt-4o-mini
+    LLM_API_KEY=sk-...
+    ```
 
 ---
 
-## 🎯 Note pour NotebookLM
-Ce dépôt est optimisé pour être analysé par **NotebookLM** afin de reconstruire la logique pédagogique de l'évolution des agents.
+## 🪜 Détail des Phases
+
+### Phase A : Les Fondations (Prompting & Mémoire)
+*Objectif : Comprendre comment envoyer une requête et gérer une conversation.*
+
+*   **A01 : Simple API**
+    Le point de départ. Une question, une réponse.
+    ![Question et Réponse](doc/A01_simple_api_Question_et_reponse.png)
+
+*   **A02 : Chat Terminal**
+    Ajout de la mémoire. Le LLM se souvient des échanges précédents dans le terminal.
+    ![Conversation Terminal](doc/A02_chat_terminal_conversation.png)
+
+*   **A03 : Streamlit Chat**
+    Passage au Web. Une interface de chat moderne et fluide.
+    ![Interface Streamlit](doc/A03_streamlit_chat_conversation.png)
+    *Architecture :*
+    ![Diagramme A03](doc/A03_streamlit_chat_diagramme.png)
+
+---
+
+### Phase B : Connaissance & RAG (Retrieval Augmented Generation)
+*Objectif : Connecter le LLM à vos propres documents.*
+
+*   **B02 : RAG (Base de Données Vectorielle)**
+    Le LLM "lit" des fiches sur les héros Marvel et répond en s'appuyant sur ces preuves.
+    ![RAG en action](doc/B02_query_rag_conversation.png)
+    *Fonctionnement :*
+    ![Diagramme RAG](doc/B02_query_rag_diagramme.png)
+
+*   **B03 : LangGraph Routing**
+    Utilisation de LangGraph pour créer un "cerveau" qui décide du chemin : Question Marvel -> RAG / Question Générale -> Chat direct.
+    ![Routage Domaine](doc/B03_langgraph_routing_branche_domaine.png)
+    ![Routage Hors-Domaine](doc/B03_langgraph_routing_branche_hors_domaine.png)
+    *Logique du graphe :*
+    ![Diagramme Routage](doc/B03_langgraph_routing_diagramme.png)
+
+---
+
+### Phase C : Données Structurées (Text-to-SQL)
+*Objectif : Interroger des bases de données SQL en langage naturel.*
+
+*   **C01 : Streamlit SQL**
+    L'utilisateur demande "Combien de films pour Thor ?", le LLM génère et exécute le SQL.
+    ![Tableau SQL](doc/C01_streamlit_sql_tableau.png)
+    *Flux :*
+    ![Diagramme SQL](doc/C01_streamlit_sql_diagramme.png)
+
+*   **C02 : Catalog Explorer**
+    Exploration d'un catalogue de métadonnées pour trouver la bonne table avant d'interroger.
+    ![Tableau Catalogue](doc/C02_streamlit_catalog_tableau.png)
+    *Flux :*
+    ![Diagramme Catalogue](doc/C02_streamlit_catalog_diagramme.png)
+
+---
+
+### Phase D : Action & Outils (Tool Calling)
+*Objectif : Autoriser le LLM à utiliser des outils externes.*
+
+*   **D01 : Agent avec Outils**
+    L'agent appelle un "Calculateur de Combat" (API externe) pour arbitrer qui gagne un duel.
+    ![Tool Calling](doc/D01_streamlit_tools_conversation.png)
+    *Séquence :*
+    ![Diagramme Tools](doc/D01_streamlit_tools_diagramme.png)
+
+*   **D02 : Data Visualization**
+    L'agent génère du code Python pour créer des graphiques dynamiques.
+    ![Graphique](doc/D02_streamlit_charts_graphique.png)
+    *Processus :*
+    ![Diagramme Charts](doc/D02_streamlit_charts_diagramme.png)
+
+---
+
+### Phase E : Industrialisation avec MCP
+*Objectif : Standardiser les connexions via le Model Context Protocol.*
+
+*   **E01 - E05** : Exploration des bases (Resources, Tools, Prompts, Progress bars).
+*   **E06 : Notifications Temps Réel**
+    Le serveur MCP pousse des notifications aux clients lors de changements de données.
+    *Avant ajout :*
+    ![Avant](doc/E06_MCP_notification_avant.png)
+    *Après notification (Mise à jour automatique) :*
+    ![Après](doc/E06_MCP_notification_maj.png)
+    *Architecture du flux :*
+    ![Graphique E06](doc/E06_MCP_notification_graphique.png)
+
+---
+
+## 🛠️ Outils & Méthodologie
+Ce projet démontre comment assembler brique par brique un écosystème d'IA agentique moderne, robuste et visuellement attractif.
+Realized with the help of **Google Antigravity**.

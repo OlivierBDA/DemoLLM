@@ -1,0 +1,46 @@
+
+        <!DOCTYPE html>
+        <html lang="fr">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>MCP Resources Viewer</title>
+            <!-- Rafraîchissement automatique toutes les 1 seconde -->
+            <meta http-equiv="refresh" content="1">
+            <style>
+                body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f6; padding: 20px; }
+                .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+                h1 { color: #e23636; border-bottom: 2px solid #e23636; padding-bottom: 10px; }
+                .status { font-size: 0.9em; color: #666; margin-bottom: 20px; }
+                .resource-list { list-style: none; padding: 0; }
+                .resource-item { background: #f8f9fa; border-left: 5px solid #007bff; margin-bottom: 10px; padding: 15px; border-radius: 4px; }
+                .resource-item.new { border-left-color: #28a745; background: #e8f5e9; animation: flash 1s; }
+                .uri { color: #666; font-family: monospace; font-size: 0.9em; }
+                @keyframes flash { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>📡 MCP Live Resources</h1>
+                <div class="status">
+                    Dernière mise à jour : 22:32:47
+                    <br>Connecté à : http://127.0.0.1:8004/sse
+                </div>
+                
+                <ul class="resource-list">
+        
+                    <li class="resource-item">
+                        <strong>📄 Timeline du MCU</strong><br>
+                        <span class="uri">mcp://marvel/timeline</span>
+                    </li>
+                
+                    <li class="resource-item">
+                        <strong>📄 Catalogue des Héros</strong><br>
+                        <span class="uri">mcp://marvel/heroes</span>
+                    </li>
+                
+                </ul>
+            </div>
+        </body>
+        </html>
+        

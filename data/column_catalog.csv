@@ -1,0 +1,14 @@
+table_name,column_name,business_label,description,relationships
+heroes,superhero_name,Nom de Super-Héros,Le nom de scène du personnage (ex: Iron Man).,
+heroes,real_name,Nom Civil,L'identité secrète ou le nom de naissance du personnage.,
+heroes,intelligence,Niveau d'Intelligence,Capacité de réflexion et connaissances techniques (1-7).,
+heroes,strength,Force Physique,Niveau de puissance brute évalué de 1 à 7.,
+heroes,speed,Vitesse,Vitesse de déplacement et de réaction (1-7).,
+heroes,durability,Endurance / Résistance,Capacité à encaisser des dégâts ou à se régénérer (1-7).,
+heroes,energy_projection,Projection d'Énergie,Capacité à projeter des décharges d'énergie (1-7).,
+heroes,fighting_skills,Compétences au Combat,Maîtrise des arts martiaux ou du combat à mains nues (1-7).,
+movies,title,Titre du Film,Nom officiel du film dans la franchise.,
+movies,release_year,Annee de Sortie,Année de la première diffusion au cinéma.,
+movies,box_office_revenue_mil,Succes financier (M$),Revenu total généré au cinéma en millions de dollars.,
+hero_appearances,hero_id,ID Heros,Référence technique externe vers le tableau des héros.,heroes.id
+hero_appearances,movie_id,ID Film,Référence technique externe vers le tableau des films.,movies.id

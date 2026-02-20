@@ -1,0 +1,4 @@
+table_name,functional_domain,scope_description,business_concepts
+heroes,Personnages et Capacités,Contient la liste des super-héros Marvel avec leurs identités secrètes et leurs mesures de puissance (Power Grid).,"force, intelligence, vitesse, personnage, héros, identité, pouvoir, combat, endurance"
+movies,Performance Commerciale,Regroupe les films produits par Marvel Studios avec leurs dates de sortie et les revenus générés au box-office mondial.,"argent, succès, box-office, rentabilité, date, année, film, recette, financier"
+hero_appearances,Casting et Filmographie,Table de liaison permettant d'identifier quels super-héros apparaissent dans quels films spécifiques du MCU.,"acteur, présence, casting, filmographie, rôle, apparition, liste"

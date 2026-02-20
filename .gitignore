@@ -18,7 +18,8 @@ dist/
 all-minilm-l6/
 
 # Demo files (optional, depending on if you want to share data)
-data/
+# data/
+faiss_index/
 *.db
 *.faiss
 *.index
