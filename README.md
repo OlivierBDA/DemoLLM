@@ -172,6 +172,16 @@ Ce projet est conçu pour être **didactique** et **progressif**. Il part d'un s
     *Architecture :*
     ![Graphique E06](doc/E06_MCP_notification_graphique.png)
 
+*   **E07 : Prompts MCP (Gabarits Côté Serveur)**
+    Démonstration de la primitive MCP `prompts` qui permet au serveur de fournir des contextes pré-formatés (instructions + données imbriquées) prêts à être consommés par un LLM.
+    - **Test** :
+        1. Lancer le serveur : `python E07a_mcp_server_prompts.py`.
+        2. Lancer l'App : `streamlit run E07b_streamlit_mcp_prompts.py`.
+        3. Choisir un prompt pré-généré (ex: `analyze_combat` ou `create_hero_card`) et lancer l'analyse via l'agent LLM.
+    ![Prompts UI](doc/E07_MCP_Prompts_streamlit.png)
+    *Flux :*
+    ![Diagramme E07](doc/E07_MCP_Prompts_graphique.png)
+
 ---
 
 ## 🛠️ Outils & Méthodologie
