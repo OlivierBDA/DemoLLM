@@ -56,29 +56,7 @@ def configure_page():
     st.set_page_config(page_title="Demo LLM - Marvel UI", page_icon="🦸", layout="wide")
     st.title("🦸 Demo LLM : Assistant Marvel")
     
-    # ENCART D'INFORMATION
-    with st.expander("ℹ️ À propos de cette étape : Première Interface", expanded=False):
-        st.markdown("""
-        **Concept : Sortir du terminal**
-        Cette étape introduit **Streamlit**, un framework qui permet de transformer des scripts Python en applications web interactives.
-        
-        **Fonctionnement :**
-        - L'interface gère l'historique de session (`st.session_state`).
-        - Le LLM est appelé en mode **Streaming** pour une expérience plus fluide.
-        """)
-        st.graphviz_chart('''
-            digraph G {
-                rankdir=LR;
-                node [shape=box, fontname="Helvetica", fontsize=10];
-                User [label="Utilisateur"];
-                UI [label="Streamlit Chat", style=filled, color=lightblue];
-                LLM [label="LLM (OpenAI/Gemini)", style=filled, color=orange];
-                
-                User -> UI [label="Question"];
-                UI -> LLM [label="Historique + Prompt"];
-                LLM -> UI [label="Réponse (Stream)"];
-            }
-        ''')
+    # L'encart d'information a été déplacé dans le Cockpit principal (onglet Concept).
     st.markdown("---")
 
 def render_sidebar():
