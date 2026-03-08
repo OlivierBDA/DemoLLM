@@ -13,6 +13,11 @@ try:
             st.Page("cockpit_pages/a01_demo.py", title="A01 : API Simple", icon="1️⃣"),
             st.Page("cockpit_pages/a02_demo.py", title="A02 : Chat Terminal", icon="2️⃣"),
             st.Page("cockpit_pages/a03_demo.py", title="A03 : Streamlit Chat", icon="3️⃣"),
+        ],
+        "Phase B : RAG & Agent": [
+            st.Page("cockpit_pages/b01_demo.py", title="B01 : Concept Data Gen", icon="💾"),
+            st.Page("cockpit_pages/b02_demo.py", title="B02 : FAISS & RAG", icon="📚"),
+            st.Page("cockpit_pages/b03_demo.py", title="B03 : Routage LangGraph", icon="🧭"),
         ]
     }
 

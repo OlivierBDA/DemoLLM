@@ -161,36 +161,8 @@ st.set_page_config(page_title="Demo LLM - Étape 6", page_icon="🧭", layout="w
 # TITRE UNIFIÉ
 st.title("🦸 Demo LLM - Assistant Marvel")
 
-# ENCART D'INFORMATION (ASPECT CLÉ)
-with st.expander("ℹ️ À propos de cette étape : Routage Intelligent", expanded=False):
-    st.markdown("""
-    **Ce qui est testé dans cette étape :**
-    L'utilisation de **LangGraph** pour orchestrer un flux de décision. L'agent n'est plus linéaire : il réfléchit au meilleur chemin.
-    
-    **Comment tester :**
-    1. Posez une question sur Marvel (ex: "Qui est Hulk ?") -> L'agent doit activer la branche **RAG**.
-    2. Posez une question hors-sujet (ex: "Comment faire un gâteau ?") -> L'agent doit activer la branche **Générale**.
-    
-    **Logique du Graphe :**
-    """)
-    # ASPECT CLÉ : Utilisation de Graphviz pour un rendu natif dans Streamlit
-    st.graphviz_chart('''
-        digraph G {
-            rankdir=LR;
-            node [shape=box, style=filled, fontname="Helvetica", fontsize=10];
-            Start [shape=circle, style=filled, color=lightgrey, label="Début"];
-            Router [shape=diamond, style=filled, color=orange, label="Routeur ?"];
-            RAG [style=filled, color=palegreen, label="Branche RAG\\n(Marvel)"];
-            General [style=filled, color=lightcoral, label="Branche Générale\\n(Autre)"];
-            End [shape=circle, style=filled, color=lightgrey, label="Fin"];
-            
-            Start -> Router;
-            Router -> RAG [label="Marvel", fontsize=10];
-            Router -> General [label="Autre", fontsize=10];
-            RAG -> End;
-            General -> End;
-        }
-    ''')
+# L'encart d'information a été déplacé dans le Cockpit principal (onglet Concept).
+st.markdown("---")
 
 # Sidebar
 with st.sidebar:
