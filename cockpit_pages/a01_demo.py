@@ -34,11 +34,18 @@ Ici, nous n'avons pas de "mémoire". Chaque requête est indépendante. C'est l'
 
 with tab_demo:
     st.header("Démonstration Technique")
-    st.info("*Comment ça marche : Ce programme est un script console simple. Afin de préserver la nature bas niveau et pédagogique de cette première étape, lancez-le directement depuis votre terminal pour observer l'interaction brute.*")
+    st.info("*Pour préserver la nature bas niveau et pédagogique de cette première étape, le script s'ouvrira dans un VRAI terminal externe interactif.*")
     
-    st.markdown("**Instructions d'exécution :**")
-    st.write("Exécutez la commande suivante à la racine du projet :")
-    st.code("python A01_simple_api.py", language="bash")
+    if st.button("🚀 Ouvrir A01_simple_api.py dans un Terminal", type="primary"):
+        root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        bat_file = os.path.join(root_dir, "run_A01.bat")
+        
+        try:
+            # shell=True est nécessaire sous Windows pour la commande 'start'
+            subprocess.Popen(f'start cmd /k "{bat_file}"', shell=True, cwd=root_dir)
+            st.success("Terminal externe lancé !")
+        except Exception as e:
+            st.error(f"Impossible de lancer le terminal : {e}")
 
 with tab_code:
     st.header("Aperçu du Code Source")

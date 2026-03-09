@@ -109,30 +109,8 @@ st.set_page_config(page_title="Marvel Data Governance", page_icon="🏛️", lay
 
 st.title("🛡️ Demo LLM - Étape 8 : Catalogue & Gouvernance")
 
-# ENCART D'INFORMATION
-with st.expander("ℹ️ À propos de cette étape : L'Agent de Gouvernance", expanded=False):
-    st.markdown("""
-    **Concept : Séparation Métier / Technique**
-    Ici, le LLM ne connaît pas les tables au départ. Il doit d'abord consulter un **Catalogue de Données** (Métadonnées) pour "comprendre" où chercher.
-    
-    **Pourquoi c'est important ?**
-    - En entreprise, les noms de tables sont souvent obscurs (ex: `TBL_FIN_01_XYZ`).
-    - Le catalogue permet de faire le pont entre "Succès financier" (terme métier) et `box_office_revenue` (nom technique).
-    
-    **Processus de l'Agent :**
-    """)
-    st.graphviz_chart('''
-        digraph G {
-            rankdir=LR;
-            node [shape=box, fontname="Helvetica", fontsize=10];
-            Q [label="Question Métier", shape=ellipse];
-            CatG [label="Catalogue Global\\n(Exploration)", style=filled, color=orange];
-            CatD [label="Catalogue Détail\\n(Contexte)", style=filled, color=palegreen];
-            SQL [label="Génération SQL", style=filled, color=lightblue];
-            
-            Q -> CatG -> CatD -> SQL;
-        }
-    ''')
+# L'encart d'information a été déplacé dans le Cockpit principal (onglet Concept).
+st.markdown("---")
 
 # Initialisation
 agent = DataCatalogAgent()

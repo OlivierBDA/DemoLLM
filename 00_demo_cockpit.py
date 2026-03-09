@@ -18,6 +18,14 @@ try:
             st.Page("cockpit_pages/b01_demo.py", title="B01 : Concept Data Gen", icon="💾"),
             st.Page("cockpit_pages/b02_demo.py", title="B02 : FAISS & RAG", icon="📚"),
             st.Page("cockpit_pages/b03_demo.py", title="B03 : Routage LangGraph", icon="🧭"),
+        ],
+        "Phase C : Base SQL & Gouvernance": [
+            st.Page("cockpit_pages/c01_demo.py", title="C01 : Text-To-SQL", icon="🗄️"),
+            st.Page("cockpit_pages/c02_demo.py", title="C02 : Agent Data Steward", icon="🏛️"),
+        ],
+        "Phase D : Agents Avancés & IA": [
+            st.Page("cockpit_pages/d01_demo.py", title="D01 : Outils (Tool Calling)", icon="🛠️"),
+            st.Page("cockpit_pages/d02_demo.py", title="D02 : Visualisations Dynamiques", icon="📊"),
         ]
     }
 

@@ -90,35 +90,8 @@ st.set_page_config(page_title="Marvel SQL Explorer", page_icon="🗄️", layout
 
 st.title("🛡️ Demo LLM - Étape 7 : Text-to-SQL")
 
-# ENCART D'INFORMATION
-with st.expander("ℹ️ À propos de cette étape : RAG Structuré", expanded=False):
-    st.markdown("""
-    **Concept :**
-    Contrairement au RAG vectoriel (Step 5/6), ici le LLM interroge une base de données **relationnelle**. 
-    Il traduit votre intention en langage SQL technique.
-    
-    **Schema de la démo :**
-    """)
-    st.graphviz_chart('''
-        digraph G {
-            rankdir=LR;
-            node [shape=box, fontname="Helvetica", fontsize=10];
-            Q [label="Question", shape=ellipse];
-            LLM [label="LLM (SQL Expert)", style=filled, color=orange];
-            DB [label="SQLite\\n(heroes, movies)", style=filled, color=palegreen];
-            Res [label="Tableau de données", style=filled, color=lightblue];
-            
-            Q -> LLM [label="Natural Language"];
-            LLM -> DB [label="SQL Query"];
-            DB -> Res [label="Pandas DF"];
-        }
-    ''')
-    st.markdown("""
-    **Comment tester :**
-    1. *"Quels sont les héros les plus intelligents ?"*
-    2. *"Quel est le box-office total de tous les films ?"*
-    3. *"Quels sont les films où apparaît Iron Man ?"*
-    """)
+# L'encart d'information a été déplacé dans le Cockpit principal (onglet Concept).
+st.markdown("---")
 
 # Sidebar
 with st.sidebar:

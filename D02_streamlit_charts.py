@@ -82,33 +82,8 @@ st.set_page_config(page_title="Marvel Data Visualizer", page_icon="📊", layout
 st.title("📊 Demo LLM - Étape 10 : Visualisations Dynamiques")
 
 # ENCART D'INFORMATION
-with st.expander("ℹ️ À propos de cette étape : L'IA au service de la donnée", expanded=False):
-    st.markdown("""
-    **Concept : Visualisation "On-the-fly"**
-    Dans cette étape finale, l'agent ne se contente plus de cracher des chiffres. Il **propose** une visualisation adaptée à votre question.
-    
-    **Ce que fait l'agent :**
-    1. Traduit votre question en SQL pour extraire le jeu de données technique.
-    2. Identifie si un graphique est pertinent (ex: pour comparer des forces).
-    3. Configure automatiquement les axes et le type de graphique (Barres, Lignes, etc.).
-    """)
-    st.graphviz_chart('''
-        digraph G {
-            rankdir=LR;
-            node [shape=box, fontname="Helvetica", fontsize=10];
-            Q [label="Question", shape=ellipse];
-            SQL [label="LLM (Phase 1: SQL)", style=filled, color=orange];
-            DB [label="SQLite DB", style=filled, color=palegreen];
-            VIZ [label="LLM (Phase 2: Viz)", style=filled, color=orange];
-            Chart [label="Streamlit Chart", style=filled, color=lightblue];
-            
-            Q -> SQL;
-            SQL -> DB;
-            DB -> VIZ [label="Pandas DF"];
-            VIZ -> Chart [label="JSON Config"];
-        }
-    ''')
-    st.image("https://img.icons8.com/fluency/96/combo-chart.png", width=50)
+# L'encart d'information a été déplacé dans le Cockpit principal (onglet Concept).
+st.markdown("---")
 
 # Initialisation
 if "visual_agent" not in st.session_state:

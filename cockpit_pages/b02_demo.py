@@ -89,12 +89,16 @@ with tab_demo:
 
     with col2:
         st.info("**B02b : Tester dans le Terminal (Optionnel)**")
-        st.markdown('''
-        *Vous pouvez tester la version "brute" en console :*
-        ```bash
-        python B02b_query_rag.py
-        ```
-        ''')
+        st.markdown("*Testez la version 'brute' interactive en console :*")
+        
+        if st.button("🚀 Ouvrir B02b_query_rag.py (Terminal)"):
+            root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            bat_file = os.path.join(root_dir, "run_B02b.bat")
+            try:
+                subprocess.Popen(f'start cmd /k "{bat_file}"', shell=True, cwd=root_dir)
+                st.toast("Terminal RAG lancé !")
+            except Exception as e:
+                st.error(f"Erreur : {e}")
 
     st.divider()
     st.subheader("Interface RAG Interactive (B02c)")

@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import subprocess
 
 st.title("Étape A02 : Chat Terminal")
 
@@ -37,11 +38,17 @@ Dans l'étape précédente, le modèle oubliait la question précédente. Ici, n
 
 with tab_demo:
     st.header("Démonstration Technique")
-    st.info("*Comment ça marche : Ce programme est une application terminal interactive (boucle infinie avec saisie utilisateur). Au lieu de l'exécuter dans cette interface web au risque de la bloquer, nous vous invitons à exécuter ce script console dans votre propre terminal.*")
+    st.info("*Ce programme est une application terminal interactive (boucle infinie). Pour ne pas bloquer cette interface, il s'ouvrira dans un terminal dédié externe.*")
     
-    st.markdown("**Instructions d'exécution :**")
-    st.write("Exécutez la commande suivante à la racine du projet :")
-    st.code("python A02_chat_terminal.py", language="bash")
+    if st.button("🚀 Ouvrir A02_chat_terminal.py dans un Terminal", type="primary"):
+        root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        bat_file = os.path.join(root_dir, "run_A02.bat")
+        
+        try:
+            subprocess.Popen(f'start cmd /k "{bat_file}"', shell=True, cwd=root_dir)
+            st.success("Terminal interactif externe lancé !")
+        except Exception as e:
+            st.error(f"Impossible de lancer le terminal : {e}")
     
 
 with tab_code:

@@ -129,31 +129,8 @@ st.set_page_config(page_title="Native Tool Calling", page_icon="🤖", layout="w
 
 st.title("🤖 Demo LLM - Phase D : Étape 1b : Agent avec Tool Calling")
 
-with st.expander("ℹ️ À propos de l'Appel d'Outils Natifs", expanded=False):
-    st.markdown("""
-    **La 'vraie' méthode : bind_tools**
-    Ici le LLM possède officiellement une boîte à outils.
-    
-    1. **Déclaration** : On donne la signature de la fonction au LLM.
-    2. **Autonomie** : Le LLM décide seul s'il doit appeler l'outil ou répondre directement.
-    3. **Protocole** : Utilisation des structures `tool_calls` et `ToolMessage` de LangChain.
-    """)
-    st.graphviz_chart('''
-        digraph G {
-            rankdir=LR;
-            node [shape=box, fontname="Helvetica", fontsize=10];
-            Q [label="Question", shape=ellipse];
-            LLM [label="LLM (avec bind_tools)", style=filled, color=orange];
-            Tool [label="Fonction simulate_combat", style=filled, color=palegreen];
-            Resp [label="Réponse Finale", style=filled, color=lightblue];
-            
-            Q -> LLM;
-            LLM -> Tool [label="tool_call"];
-            Tool -> LLM [label="tool_result"];
-            LLM -> Resp;
-        }
-    ''')
-    st.info("💡 Testez: 'Qui gagnerait entre Iron Man et Thor ?' vs 'Comment tu vas ?'")
+# L'encart d'information a été déplacé dans le Cockpit principal (onglet Concept).
+st.markdown("---")
 
 # Initialisation
 if "native_agent" not in st.session_state:
