@@ -153,7 +153,7 @@ def main():
                 else:
                     st.text("Aucun document")
 
-    st.title("🦸 Demo LLM : Assistant Marvel (Mode RAG)")
+    st.subheader("🦸 Demo LLM : Assistant Marvel (Mode RAG)")
     
     # L'encart d'information a été déplacé dans le Cockpit principal (onglet Concept).
     st.markdown("---")

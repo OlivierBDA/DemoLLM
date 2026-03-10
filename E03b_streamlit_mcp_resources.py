@@ -45,7 +45,7 @@ async def mcp_read_resource(uri):
 def configure_page():
     """Configure les méta-données et l'encart didactique (Orientation Manager)."""
     st.set_page_config(page_title="MCP E03 : Resources", page_icon="📚", layout="wide")
-    st.title("📚 Phase E : Étape 3 : La Bibliothèque Universelle (Resources)")
+    st.subheader("📚 Phase E : Étape 3 : La Bibliothèque Universelle (Resources)")
 
     # L'encart didactique a été déplacé dans le Cockpit (Concept).
     st.markdown("---")

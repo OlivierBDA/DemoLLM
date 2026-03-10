@@ -41,7 +41,7 @@ async def mcp_read(uri):
 
 def main():
     st.set_page_config(page_title="MCP E04 : Templates", page_icon="🧩", layout="wide")
-    st.title("🧩 Phase E : Étape 4 : Les Modèles de Ressources (Templates)")
+    st.subheader("🧩 Phase E : Étape 4 : Les Modèles de Ressources (Templates)")
 
     # L'encart didactique a été déplacé dans le Cockpit (Concept).
     st.markdown("---")

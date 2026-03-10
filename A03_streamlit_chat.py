@@ -54,7 +54,7 @@ def get_llm_response_stream(llm, message_history):
 def configure_page():
     """Configure les méta-données et le style de la page."""
     st.set_page_config(page_title="Demo LLM - Marvel UI", page_icon="🦸", layout="wide")
-    st.title("🦸 Demo LLM : Assistant Marvel")
+    st.subheader("🦸 Demo LLM : Assistant Marvel")
     
     # L'encart d'information a été déplacé dans le Cockpit principal (onglet Concept).
     st.markdown("---")

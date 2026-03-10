@@ -156,7 +156,7 @@ class MCPAgentWithPrompts:
 # --- STREAMLIT UI ---
 def main():
     st.set_page_config(page_title="MCP Prompts", page_icon="📝", layout="wide")
-    st.title("📝 E07 : MCP Prompts (Gabarits Côté Serveur)")
+    st.subheader("📝 E07 : MCP Prompts (Gabarits Côté Serveur)")
     st.markdown("Utilisez cette interface pour voir comment un serveur MCP fournit un **contexte préparé** (ressources et instructions) pour guider le LLM.")
 
     # L'encart didactique a été déplacé dans le Cockpit (Concept).

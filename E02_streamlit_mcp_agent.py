@@ -136,7 +136,7 @@ class MCPConnectedAgent:
 
 def main():
     st.set_page_config(page_title="MCP E02 : Connected Agent", page_icon="🤖", layout="wide")
-    st.title("🤖 Phase E : Étape 2 : L'Agent Connecté (Intelligence & Action)")
+    st.subheader("🤖 Phase E : Étape 2 : L'Agent Connecté (Intelligence & Action)")
 
     # L'encart didactique a été déplacé dans le Cockpit (Concept).
     st.markdown("---")

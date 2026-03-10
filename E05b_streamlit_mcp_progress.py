@@ -46,7 +46,7 @@ async def mcp_run_combat(hero1, hero2, progress_cb):
 
 def main():
     st.set_page_config(page_title="MCP E05 : Progress", page_icon="⏳", layout="wide")
-    st.title("⏳ Phase E : Étape 5 : Suivi de Progression (Progress Tracking)")
+    st.subheader("⏳ Phase E : Étape 5 : Suivi de Progression (Progress Tracking)")
 
     # L'encart didactique a été déplacé dans le Cockpit (Concept).
     st.markdown("---")

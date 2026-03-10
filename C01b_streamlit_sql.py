@@ -88,7 +88,7 @@ def generate_sql(llm, question: str, schema: str):
 
 st.set_page_config(page_title="Marvel SQL Explorer", page_icon="🗄️", layout="wide")
 
-st.title("🛡️ Demo LLM - Étape 7 : Text-to-SQL")
+st.subheader("🛡️ Demo LLM - Étape 7 : Text-to-SQL")
 
 # L'encart d'information a été déplacé dans le Cockpit principal (onglet Concept).
 st.markdown("---")

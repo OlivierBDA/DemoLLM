@@ -159,7 +159,7 @@ def create_marvel_agent():
 st.set_page_config(page_title="Demo LLM - Étape 6", page_icon="🧭", layout="wide")
 
 # TITRE UNIFIÉ
-st.title("🦸 Demo LLM - Assistant Marvel")
+st.subheader("🦸 Demo LLM - Assistant Marvel")
 
 # L'encart d'information a été déplacé dans le Cockpit principal (onglet Concept).
 st.markdown("---")

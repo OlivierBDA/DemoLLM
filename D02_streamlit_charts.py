@@ -79,7 +79,7 @@ class MarvelVisualAgent:
 
 st.set_page_config(page_title="Marvel Data Visualizer", page_icon="📊", layout="wide")
 
-st.title("📊 Demo LLM - Étape 10 : Visualisations Dynamiques")
+st.subheader("📊 Demo LLM - Étape 10 : Visualisations Dynamiques")
 
 # ENCART D'INFORMATION
 # L'encart d'information a été déplacé dans le Cockpit principal (onglet Concept).

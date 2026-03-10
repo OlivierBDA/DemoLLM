@@ -107,7 +107,7 @@ class DataCatalogAgent:
 
 st.set_page_config(page_title="Marvel Data Governance", page_icon="🏛️", layout="wide")
 
-st.title("🛡️ Demo LLM - Étape 8 : Catalogue & Gouvernance")
+st.subheader("🛡️ Demo LLM - Étape 8 : Catalogue & Gouvernance")
 
 # L'encart d'information a été déplacé dans le Cockpit principal (onglet Concept).
 st.markdown("---")

@@ -41,7 +41,7 @@ async def discover_capabilities(url):
 def configure_page():
     """Configure les méta-données et l'encart didactique (Orientation Manager)."""
     st.set_page_config(page_title="MCP E01 : Discovery", page_icon="🔌", layout="wide")
-    st.title("🔌 Phase E : Étape 1 : Le Contrat de Service Universel")
+    st.subheader("🔌 Phase E : Étape 1 : Le Contrat de Service Universel")
     
     # L'encart didactique a été déplacé dans le Cockpit (Concept).
     st.markdown("---")
