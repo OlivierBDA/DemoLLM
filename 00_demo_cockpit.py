@@ -26,6 +26,15 @@ try:
         "Phase D : Agents Avancés & IA": [
             st.Page("cockpit_pages/d01_demo.py", title="D01 : Outils (Tool Calling)", icon="🛠️"),
             st.Page("cockpit_pages/d02_demo.py", title="D02 : Visualisations Dynamiques", icon="📊"),
+        ],
+        "Phase E : Model Context Protocol": [
+            st.Page("cockpit_pages/e01_demo.py", title="E01 : Contrat (Discovery)", icon="🔌"),
+            st.Page("cockpit_pages/e02_demo.py", title="E02 : Agent Connecté", icon="🤖"),
+            st.Page("cockpit_pages/e03_demo.py", title="E03 : Ressources", icon="📚"),
+            st.Page("cockpit_pages/e04_demo.py", title="E04 : Modèles (Templates)", icon="🧩"),
+            st.Page("cockpit_pages/e05_demo.py", title="E05 : Suivi (Progress)", icon="⏳"),
+            st.Page("cockpit_pages/e06_demo.py", title="E06 : Notifications", icon="🔔"),
+            st.Page("cockpit_pages/e07_demo.py", title="E07 : Prompts", icon="📝"),
         ]
     }
 

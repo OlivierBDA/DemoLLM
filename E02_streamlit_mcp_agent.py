@@ -138,35 +138,8 @@ def main():
     st.set_page_config(page_title="MCP E02 : Connected Agent", page_icon="🤖", layout="wide")
     st.title("🤖 Phase E : Étape 2 : L'Agent Connecté (Intelligence & Action)")
 
-    # ENCART DIDACTIQUE
-    with st.expander("ℹ️ Comprendre l'enjeu : L'Intelligence aux commandes", expanded=False):
-        st.markdown("""
-        **Concept : Le Triangle de l'Action**
-        Ici, nous passons de la simple "Découverte" à l'exécution orchestrée par l'IA.
-        
-        1.  **Découverte (Discovery)** : Au chargement, l'agent explore le serveur MCP.
-        2.  **Raisonnement** : Le LLM analyse votre question et décide d'utiliser l'outil adéquat.
-        3.  **Exécution Discrète** : Le client exécute l'ordre du LLM sur le serveur distant.
-        """)
-        st.graphviz_chart('''
-            digraph G {
-                rankdir=TD;
-                node [shape=box, fontname="Helvetica", fontsize=10];
-                User [label="Utilisateur"];
-                LLM [label="Intelligence (LLM)", style=filled, color=orange];
-                Client [label="Application (Orchestrateur)", style=filled, color=lightblue];
-                Server [label="Serveur MCP (Action)", style=filled, color=lightgrey];
-                
-                User -> Client [label="Question"];
-                Client -> LLM [label="Demande d'analyse"];
-                LLM -> Client [label="Ordre : 'Appelle Tool X'"];
-                Client -> Server [label="Exécution via Réseau"];
-                Server -> Client [label="Résultat structuré"];
-                Client -> LLM [label="Consigne de synthèse"];
-                LLM -> Client [label="Récit final"];
-                Client -> User [label="Réponse épique"];
-            }
-        ''')
+    # L'encart didactique a été déplacé dans le Cockpit (Concept).
+    st.markdown("---")
 
     # INITIALISATION DYNAMIQUE
     if "mcp_agent" not in st.session_state:

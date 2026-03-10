@@ -48,26 +48,8 @@ def main():
     st.set_page_config(page_title="MCP E05 : Progress", page_icon="⏳", layout="wide")
     st.title("⏳ Phase E : Étape 5 : Suivi de Progression (Progress Tracking)")
 
-    with st.expander("ℹ️ Pourquoi le Progress Tracking est-il crucial ?", expanded=True):
-        st.markdown("""
-        **Le Problème : L'Effet "Tunnel"**
-        Dans un appel API classique, l'interface se fige jusqu'à la fin.
-        
-        **La Solution MCP : La Notification Out-of-Band**
-        Le serveur envoie des messages `notifications/progress` *pendant* l'exécution.
-        """)
-        st.graphviz_chart('''
-            digraph G {
-                rankdir=LR;
-                node [shape=box, fontname="Helvetica", fontsize=10];
-                Client [label="Frontend (Streamlit)"];
-                Server [label="Serveur MCP"];
-                
-                Client -> Server [label="1. call_tool(progToken='TX1')"];
-                Server -> Client [label="2. [Prog] Round 1 (TX1)", style=dashed, color=blue];
-                Server -> Client [label="3. Resultat Final", color=green, penwidth=2];
-            }
-        ''')
+    # L'encart didactique a été déplacé dans le Cockpit (Concept).
+    st.markdown("---")
 
     col1, col2 = st.columns([1, 2])
 

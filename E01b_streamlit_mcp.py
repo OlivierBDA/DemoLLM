@@ -42,30 +42,8 @@ def configure_page():
     """Configure les méta-données et l'encart didactique (Orientation Manager)."""
     st.set_page_config(page_title="MCP E01 : Discovery", page_icon="🔌", layout="wide")
     st.title("🔌 Phase E : Étape 1 : Le Contrat de Service Universel")
-
-    with st.expander("ℹ️ Comprendre l'enjeu stratégique : Le Découplage", expanded=True):
-        st.markdown("""
-        **L'Objectif : Agilité et Interopérabilité**
-        MCP (Model Context Protocol) permet de séparer totalement l'intelligence (l'IA) des capacités techniques (les outils métier). 
-        
-        **Ce que cette étape démontre :**
-        1.  **Découverte Dynamique** : Le client ne "connaît" pas les outils à l'avance. Il interroge le serveur pour savoir ce qu'il sait faire.
-        2.  **Contrat Standardisé** : Le serveur répond avec un schéma précis (Input/Output). C'est la "fiche technique" du service.
-        3.  **Indépendance Totale** : Le serveur peut être mis à jour ou remplacé sans modifier le code de l'application cliente.
-        """)
-        st.graphviz_chart('''
-            digraph G {
-                rankdir=LR;
-                node [shape=box, fontname="Helvetica", fontsize=10];
-                Client [label="Application Cliente\\n(Consommateur)", style=filled, color=lightblue];
-                Server [label="Serveur MCP\\n(Fournisseur de Services)", style=filled, color=lightgrey];
-                
-                Client -> Server [label="1. Demande de capacités"];
-                Server -> Client [label="2. Présentation des contrats (Tools/Schemas)"];
-                Client -> Server [label="3. Appel d'un service spécifique"];
-                Server -> Client [label="4. Résultat structuré"];
-            }
-        ''')
+    
+    # L'encart didactique a été déplacé dans le Cockpit (Concept).
     st.markdown("---")
 
 def render_server_info():

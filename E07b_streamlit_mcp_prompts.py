@@ -113,9 +113,9 @@ class MCPAgentWithPrompts:
     def run_prompt(self, lc_messages):
         """Exécute l'agent Langchain avec les messages préparés."""
         print("\n" + "="*50)
-        print("  [LLM CLIENT] 🤖 DÉBUT DE L'ANALYSE DU PROMPT")
+        print("  [LLM CLIENT] START: DEBUT DE L'ANALYSE DU PROMPT")
         print("="*50)
-        print("  [LLM CLIENT] Envoi du prompt préparé au LLM pour analyse initiale...")
+        print("  [LLM CLIENT] Envoi du prompt prepare au LLM pour analyse initiale...")
         ai_msg = self.llm_with_tools.invoke(lc_messages)
         
         # S'il doit appeler un Tool (pour le combat)
@@ -124,16 +124,16 @@ class MCPAgentWithPrompts:
             tool_name = tool_call['name']
             tool_args = tool_call['args']
             
-            print(f"  [LLM CLIENT] ⚡ DÉCISION: Le LLM a choisi d'appeler l'outil MCP '{tool_name}'")
-            print(f"  [LLM CLIENT] ⚡ ARGUMENTS: {tool_args}")
-            print(f"  [LLM CLIENT] 📡 REQUÊTE: Envoi de la commande d'exécution au serveur MCP...")
+            print(f"  [LLM CLIENT] DECISION: Le LLM a choisi d'appeler l'outil MCP '{tool_name}'")
+            print(f"  [LLM CLIENT] ARGUMENTS: {tool_args}")
+            print(f"  [LLM CLIENT] REQUÊTE: Envoi de la commande d'execution au serveur MCP...")
             yield {"type": "status", "content": f"🛠️ Le LLM décide d'utiliser l'outil : `{tool_name}`"}
             
             raw_result = asyncio.run(mcp_call_tool(tool_name, tool_args))
             tool_output_text = raw_result.content[0].text if raw_result.content else "Aucun résultat"
             
-            print(f"  [LLM CLIENT] 📥 RÉPONSE MCP: Résultat reçu du serveur ({len(tool_output_text)} chars)")
-            print(f"  [LLM CLIENT] 🧠 SYNTHÈSE: Renvoi du résultat au LLM pour la synthèse finale...")
+            print(f"  [LLM CLIENT] RÉPONSE MCP: Resultat recu du serveur ({len(tool_output_text)} chars)")
+            print(f"  [LLM CLIENT] SYNTHÈSE: Renvoi du resultat au LLM pour la synthese finale...")
             yield {"type": "status", "content": f"Retour de l'outil reçu : `{tool_output_text}`. Synthèse en cours..."}
             
             # Repasse la balle au LLM pour la synthèse avec le message standard Langchain
@@ -141,14 +141,14 @@ class MCPAgentWithPrompts:
             lc_messages.append(ToolMessage(content=tool_output_text, tool_call_id=tool_call["id"]))
             
             final_resp = self.llm.invoke(lc_messages)
-            print("  [LLM CLIENT] ✅ TERMINÉ: Synthèse finale générée par le LLM.")
+            print("  [LLM CLIENT] TERMINÉ: Synthese finale generee par le LLM.")
             print("="*50 + "\n")
             yield {"type": "result", "answer": final_resp.content}
             
         else:
             # Réponse directe (pour le JSON)
-            print("  [LLM CLIENT] ⚡ DÉCISION: Le LLM a généré une réponse directe (pas d'outil requis).")
-            print("  [LLM CLIENT] ✅ TERMINÉ: Réponse finale prête.")
+            print("  [LLM CLIENT] DECISION: Le LLM a genere une reponse directe (pas d'outil requis).")
+            print("  [LLM CLIENT] TERMINÉ: Reponse finale prete.")
             print("="*50 + "\n")
             yield {"type": "result", "answer": ai_msg.content}
 
@@ -159,33 +159,8 @@ def main():
     st.title("📝 E07 : MCP Prompts (Gabarits Côté Serveur)")
     st.markdown("Utilisez cette interface pour voir comment un serveur MCP fournit un **contexte préparé** (ressources et instructions) pour guider le LLM.")
 
-    with st.expander("ℹ️ À propos de cette étape : Les Prompts MCP", expanded=False):
-        st.markdown("""
-        **Concept :**
-        Le protocole MCP propose une primitive `prompts`. Un serveur peut exposer des modèles de requêtes préparés à l'avance.
-        Cela permet de stocker la **complexité du Prompt Engineering** côté serveur (Logique métier, injection de fichiers) plutôt que de laisser le client s'en charger.
-        
-        Exemple : Au lieu que l'utilisateur ou le client télécharge un fichier puis écrive "Résume ce fichier", le client demande simplement le prompt `create_hero_card`. Le serveur s'occupe de lire le fichier, de le formatter et d'imposer les instructions strictes au LLM.
-
-        **Architecture de la démo :**
-        """)
-        st.graphviz_chart('''
-            digraph G {
-                rankdir=LR;
-                node [shape=box, fontname="Helvetica", fontsize=10];
-                
-                User [label="Utilisateur"];
-                Client [label="Client (Streamlit)\\n+ LLM", style=filled, color=lightblue];
-                Server [label="Serveur MCP\\n(Prompts & Tools)", style=filled, color=orange];
-                
-                User -> Client [label="Choisit un Prompt"];
-                Client -> Server [label="get_prompt(name, args)"];
-                Server -> Client [label="Retourne le Prompt généré\\n(incl. fichiers & règles)"];
-                Client -> Client [label="Passe le prompt au LLM"];
-                Client -> Server [label="(Optionnel) Appelle Outil combat"];
-                Client -> User [label="Affiche le Résultat Final"];
-            }
-        ''')
+    # L'encart didactique a été déplacé dans le Cockpit (Concept).
+    st.markdown("---")
 
     # 1. Fetch Prompts & Tools
     prompts_meta, tools_meta = mcp_get_metadata()

@@ -43,31 +43,8 @@ def main():
     st.set_page_config(page_title="MCP E04 : Templates", page_icon="🧩", layout="wide")
     st.title("🧩 Phase E : Étape 4 : Les Modèles de Ressources (Templates)")
 
-    with st.expander("ℹ️ Pourquoi utiliser des Modèles (Templates) ?", expanded=True):
-        st.markdown("""
-        **L'Enjeu : Le passage à l'échelle (Scalability)**
-        Lister 10 000 fichiers individuellement est inefficace. Le **Resource Template** permet de déclarer une règle d'accès générique.
-        
-        **Avantages :**
-        1. **Économie de bande passante** : Le catalogue reste léger même avec des millions de documents.
-        2. **Flexibilité** : On accède à la donnée uniquement quand on en a besoin (Just-in-Time).
-        3. **Standardisation** : L'URL devient une interface universelle entre l'IA et vos fichiers.
-        """)
-        st.graphviz_chart('''
-            digraph G {
-                rankdir=LR;
-                node [shape=box, fontname="Helvetica", fontsize=10];
-                Client [label="Application Cliente"];
-                Server [label="Serveur MCP"];
-                Files [label="Dossier source_files/\\n(hero_*.txt, movie_*.txt)", style=dotted];
-                
-                Client -> Server [label="1. Liste les templates"];
-                Server -> Client [label="2. 'mcp://marvel/heroes/{name}'"];
-                Client -> Server [label="3. Je veux 'mcp://marvel/heroes/hulk'"];
-                Server -> Files [label="4. Charge hero_hulk.txt"];
-                Server -> Client [label="5. Envoi du texte brut"];
-            }
-        ''')
+    # L'encart didactique a été déplacé dans le Cockpit (Concept).
+    st.markdown("---")
 
     # INITIALISATION
     if "data_mcp" not in st.session_state:

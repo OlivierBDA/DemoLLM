@@ -47,30 +47,7 @@ def configure_page():
     st.set_page_config(page_title="MCP E03 : Resources", page_icon="📚", layout="wide")
     st.title("📚 Phase E : Étape 3 : La Bibliothèque Universelle (Resources)")
 
-    with st.expander("ℹ️ L'intérêt stratégique des Ressources", expanded=True):
-        st.markdown("""
-        **Le Concept : Un Accès Standardisé au Savoir**
-        Dans un SI, les données sont souvent éparpillées (fichiers, bases, API). 
-        Le concept de **Resources** dans MCP permet d'exposer ces données comme des documents web (URIs).
-        
-        **Ce que cette étape démontre :**
-        1.  **Uniformisation** : Peu importe où se trouve le fichier, le client y accède via une adresse universelle (`mcp://...`).
-        2.  **Transparence** : L'IA peut explorer cette bibliothèque pour trouver le contexte dont elle a besoin pour répondre.
-        3.  **Contrôle** : Le serveur décide exactement ce qu'il expose et comment.
-        """)
-        st.graphviz_chart('''
-            digraph G {
-                rankdir=LR;
-                node [shape=box, fontname="Helvetica", fontsize=10];
-                Client [label="Application Cliente", style=filled, color=lightblue];
-                Server [label="Serveur de Ressources", style=filled, color=lightgrey];
-                
-                Client -> Server [label="1. Quelles sont les fiches dispo ?"];
-                Server -> Client [label="2. Voici la liste (Timeline, Heroes)"];
-                Client -> Server [label="3. Je veux lire 'mcp://marvel/timeline'"];
-                Server -> Client [label="4. Envoi du document Markdown"];
-            }
-        ''')
+    # L'encart didactique a été déplacé dans le Cockpit (Concept).
     st.markdown("---")
 
 def main():
