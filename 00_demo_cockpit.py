@@ -35,6 +35,9 @@ try:
             st.Page("cockpit_pages/e05_demo.py", title="E05 : Suivi (Progress)", icon="⏳"),
             st.Page("cockpit_pages/e06_demo.py", title="E06 : Notifications", icon="🔔"),
             st.Page("cockpit_pages/e07_demo.py", title="E07 : Prompts", icon="📝"),
+        ],
+        "Phase F : Skills & Frameworks": [
+            st.Page("cockpit_pages/f01_demo.py", title="F01 : Expertise & Skills", icon="🛡️"),
         ]
     }
 

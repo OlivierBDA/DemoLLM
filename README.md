@@ -162,6 +162,16 @@ C'est très simple grâce à notre architecture unifiée :
 
 ---
 
+### Phase F : Injection de Compétences (Skills)
+*Objectif : Transformer radicalement l'expertise d'un Agent sans modifier son code, via un cadre de raisonnement métier (Framework).*
+
+*   **F01 : Expertise & Skills**
+    L'agent passe d'un simple "Fan de Marvel" à un "Expert Tacticien du SHIELD" par l'injection d'un simple fichier Markdown dictant le protocole S.T.A.R.K.
+    *(Interface d'activation de la Skill)*
+    *Architecture :* Séparation totale entre le moteur (Code Python) et la connaissance/comportement (Fichier Markdown).
+
+---
+
 ## 🛠️ Outils & Méthodologie
 Ce projet a été modernisé avec l'assistance de **Google Antigravity** pour la structuration, le requêtage asynchrone et l'UI premium.
 Le code utilise les derniers standards (LangChain, LangGraph, protocoles MCP, SSE Streams) pour illustrer une conception moderne.
