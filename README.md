@@ -167,13 +167,15 @@ C'est très simple grâce à notre architecture unifiée :
 
 *   **F01 : Expertise & Skills (Static Injection)**
     L'agent passe d'un simple "Fan de Marvel" à un "Expert Tacticien du SHIELD" par l'injection d'un simple fichier Markdown dictant le protocole S.T.A.R.K.
-    *(Interface d'activation manuelle de la Skill)*
+    ![F01 Interface](doc/F01_Skills_1niveau_streamlit.png)
     *Architecture :* Séparation totale entre le moteur (Code Python) et la connaissance/comportement (Fichier Markdown).
+    ![Diagramme F01](doc/F01_Skills_1niveau_graphique.png)
 
 *   **F02 : Skills Discovery & Dynamic Routing (2-Tier)**
     L'agent prend connaissance d'un **Manifeste** (Catalogue de Skills). Il identifie de lui-même la Skill pertinente ("Sokovia Accords" pour le juridique ou "ATA v2.1" pour la guerre) via du Tool Calling.
-    *(Interface de chat autonome)*
+    ![F02 Interface](doc/F02_Skills_2niveaux_streamlit.png)
     *Architecture :* Isolation du contexte (Contexte éphémère). La lourde documentation de la skill n'enrichit pas l'historique global, évitant la contamination d'une réponse à l'autre.
+    ![Diagramme F02](doc/F02_Skills_2niveaux_graphique.png)
 
 ---
 
