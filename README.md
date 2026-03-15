@@ -165,10 +165,15 @@ C'est très simple grâce à notre architecture unifiée :
 ### Phase F : Injection de Compétences (Skills)
 *Objectif : Transformer radicalement l'expertise d'un Agent sans modifier son code, via un cadre de raisonnement métier (Framework).*
 
-*   **F01 : Expertise & Skills**
+*   **F01 : Expertise & Skills (Static Injection)**
     L'agent passe d'un simple "Fan de Marvel" à un "Expert Tacticien du SHIELD" par l'injection d'un simple fichier Markdown dictant le protocole S.T.A.R.K.
-    *(Interface d'activation de la Skill)*
+    *(Interface d'activation manuelle de la Skill)*
     *Architecture :* Séparation totale entre le moteur (Code Python) et la connaissance/comportement (Fichier Markdown).
+
+*   **F02 : Skills Discovery & Dynamic Routing (2-Tier)**
+    L'agent prend connaissance d'un **Manifeste** (Catalogue de Skills). Il identifie de lui-même la Skill pertinente ("Sokovia Accords" pour le juridique ou "ATA v2.1" pour la guerre) via du Tool Calling.
+    *(Interface de chat autonome)*
+    *Architecture :* Isolation du contexte (Contexte éphémère). La lourde documentation de la skill n'enrichit pas l'historique global, évitant la contamination d'une réponse à l'autre.
 
 ---
 

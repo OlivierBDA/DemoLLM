@@ -1,0 +1,16 @@
+{
+  "skills": [
+    {
+      "id": "tactical-001",
+      "name": "Advanced Tactical Analysis (ATA)",
+      "description": "Analyse de scénarios de combat haute intensité et planification stratégique militaire.",
+      "file": "tactical_analysis.md"
+    },
+    {
+      "id": "legal-001",
+      "name": "Sokovia Accords Compliance",
+      "description": "Consultation juridique, déclaration d'identité des personnes optimisées et respect du droit international régissant les super-pouvoirs.",
+      "file": "sokovia_accords.md"
+    }
+  ]
+}
