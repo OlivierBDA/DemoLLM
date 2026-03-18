@@ -39,6 +39,9 @@ try:
         "Phase F : Skills & Frameworks": [
             st.Page("cockpit_pages/f01_demo.py", title="F01 : Expertise & Skills", icon="🛡️"),
             st.Page("cockpit_pages/f02_demo.py", title="F02 : Discovery & Routing", icon="🧠"),
+        ],
+        "Phase G : Protocole A2A (Multi-Agents)": [
+            st.Page("cockpit_pages/g01_demo.py", title="G01 : Découverte A2A", icon="📡"),
         ]
     }
 

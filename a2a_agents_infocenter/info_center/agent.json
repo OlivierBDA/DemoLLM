@@ -1,0 +1,52 @@
+{
+  "name": "SHIELD Info Center",
+  "publisher": {
+    "name": "Howard Stark & Peggy Carter (SHIELD Founders)",
+    "url": "https://www.marvel.com/teams/shield"
+  },
+  "description": "Base de données centrale et centre d'analyse de renseignements sur les menaces mondiales et entités super-humaines.",
+  "url": "http://localhost:8082/a2a/info_center",
+  "version": "1.0.0",
+  "capabilities": {
+    "streaming": true,
+    "asynchronous": false
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain",
+    "application/json"
+  ],
+  "skills": [
+    {
+      "id": "entity_lookup",
+      "name": "Recherche d'Entité",
+      "description": "Récupère le dossier complet sur un individu, une organisation ou un artefact spécifique (ex: Hulk, Hydra, Tesseract).",
+      "tags": [
+        "intelligence",
+        "database",
+        "biography"
+      ],
+      "examples": [
+        "Donne-moi les dernières informations sur le Soldat de l'Hiver",
+        "Qui est le leader actuel de l'organisation AIM ?"
+      ]
+    },
+    {
+      "id": "threat_assessment",
+      "name": "Évaluation des Menaces",
+      "description": "Analyse les données globales pour identifier des anomalies ou des niveaux de menace critiques dans une zone géographique.",
+      "tags": [
+        "analysis",
+        "monitoring",
+        "security"
+      ],
+      "examples": [
+        "Y a-t-il des activités suspectes détectées à Sokovie ?",
+        "Analyse le niveau de menace actuel de la base de données du SHIELD"
+      ]
+    }
+  ],
+  "privacy_policy": "http://localhost:8082/privacy"
+}

@@ -1,0 +1,37 @@
+{
+  "name": "Avengers Team",
+  "publisher": {
+    "name": "Stan Lee & Jack Kirby",
+    "url": "https://www.marvel.com/comics/characters/1009165/avengers"
+  },
+  "description": "Équipe d'intervention rapide spécialisée dans la résolution de conflits et missions tactiques.",
+  "url": "http://localhost:8081/a2a/avengers",
+  "version": "1.0.0",
+  "capabilities": {
+    "streaming": true,
+    "asynchronous": false
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "tactical_intervention",
+      "name": "Intervention Tactique",
+      "description": "Déploie une unité sur zone pour neutraliser une menace identifiée.",
+      "tags": [
+        "combat",
+        "tactical",
+        "defense"
+      ],
+      "examples": [
+        "Déploie une équipe à New York pour intercepter Loki",
+        "Sécurise le périmètre autour du cratère"
+      ]
+    }
+  ],
+  "privacy_policy": "http://localhost:8081/privacy"
+}
