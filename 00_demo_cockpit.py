@@ -43,6 +43,7 @@ try:
         "Phase G : Protocole A2A (Multi-Agents)": [
             st.Page("cockpit_pages/g01_demo.py", title="G01 : Découverte A2A", icon="📡"),
             st.Page("cockpit_pages/g02_demo.py", title="G02 : Chat A2A", icon="💬"),
+            st.Page("cockpit_pages/g03_demo.py", title="G03 : Chaîne A2A", icon="🔗"),
         ]
     }
 

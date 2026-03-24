@@ -84,7 +84,7 @@ Le serveur Agent Info Center doit être en ligne pour répondre aux appels de l'
                     
                     # Lancement asynchrone (Popen)
                     process = subprocess.Popen(
-                        [sys.executable, "-m", "streamlit", "run", "G02c_streamlit_chat.py", "--server.port", "8510", "--server.headless", "true"],
+                        [sys.executable, "-m", "streamlit", "run", "G02_streamlit_a2a.py", "--server.port", "8510", "--server.headless", "true"],
                         cwd=root_dir,
                     )
                     st.session_state.g02_process = process
@@ -125,11 +125,11 @@ with tab_code:
     except FileNotFoundError:
         st.error("Fichier agent.py introuvable.")
 
-    st.subheader("2. Requête A2A de Nick Fury (G02c_streamlit_chat.py)")
+    st.subheader("2. Requête A2A de Nick Fury (G02_streamlit_a2a.py)")
     st.write("L'outil attaché à Nick Fury utilise un simple `requests.post` pour formater un payload standard JSON-RPC 2.0 (compatible Google ADK).")
     try:
         root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        file_path_py = os.path.join(root_dir, "G02c_streamlit_chat.py")
+        file_path_py = os.path.join(root_dir, "G02_streamlit_a2a.py")
         with open(file_path_py, "r", encoding="utf-8") as f:
             content = f.read()
             # Extract just the tool for clarity
@@ -140,7 +140,7 @@ with tab_code:
             else:
                 st.code(content, language="python")
     except FileNotFoundError:
-        st.error("Fichier G02c_streamlit_chat.py introuvable.")
+        st.error("Fichier G02_streamlit_a2a.py introuvable.")
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
