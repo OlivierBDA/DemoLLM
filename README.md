@@ -179,6 +179,32 @@ C'est très simple grâce à notre architecture unifiée :
 
 ---
 
+### Phase G : Architecture Multi-Agents (A2A)
+*Objectif : Déployer un réseau d'Agents autonomes capables de communiquer et collaborer entre eux via le protocole A2A (Agent-to-Agent).*
+
+*   **G01 : Découverte A2A (Manifeste)**
+    L'Orchestrateur découvre dynamiquement les capacités de ses sous-agents (ex: Avengers, Info Center) en interrogeant leur manifeste standardisé.
+    ![G01 Interface](doc/G01_A2A_Discovery_streamlit.png)
+    *Architecture :* Un hub central identifiant les expertises du réseau.
+    ![Diagramme G01](doc/G01_A2A_Discovery_graphique.png)
+
+*   **G02 : A2A Chat (Collaboration Inter-Agents)**
+    L'Orchestrateur délègue une requête complexe à un agent expert spécialisé de manière totalement transparente pour l'utilisateur.
+    ![G02 Interface](doc/G02_A2A_Chat_streamlit.png)
+    *Architecture :* Utilisation fluide du Tool Calling LangChain couplé à des requêtes HTTP JSON-RPC 2.0.
+    ![Diagramme G02](doc/G02_A2A_Chat_graphique.png)
+
+*   **G03 : Chaîne A2A Sécurisée (Entreprise & Traçabilité)**
+    Une véritable cascade de délégations : L'Orchestrateur sollicite les Avengers, qui sollicitent à leur tour secrètement l'Info Center en plein milieu de leur mission.
+    ![G03 Interface](doc/G03_A2A_Chain_streamlit.png)
+    *Logs de sécurité (Trace ID, Hops, Clearance) :*
+    ![Avengers logs](doc/G03_A2A_Chain_Avengers.png)
+    ![Info Center logs](doc/G03_A2A_Chain_InfoCenter.png)
+    *Architecture (Zero Trust) :* Implémentation du pattern Enveloppe avec signature HMAC, contrôle RBAC (Clearance Level), TTL (Prévention de boucles) et traçabilité des chemins (Trace Path).
+    ![Diagramme G03](doc/G03_A2A_Chain_graphique.png)
+
+---
+
 ## 🛠️ Outils & Méthodologie
 Ce projet a été modernisé avec l'assistance de **Google Antigravity** pour la structuration, le requêtage asynchrone et l'UI premium.
 Le code utilise les derniers standards (LangChain, LangGraph, protocoles MCP, SSE Streams) pour illustrer une conception moderne.

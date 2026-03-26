@@ -12,6 +12,15 @@ from langchain_core.tools import tool
 # Demo LLM - Phase G : Étape 2 : A2A Chat (Collaboration Inter-Agents)
 # ==============================================================================
 
+import hmac
+import hashlib
+
+SECRET_KEY = b"shield_ultimate_secret_key_2026"
+
+def sign_clearance(trace_id, clearance_level):
+    message = f"{trace_id}:{clearance_level}".encode('utf-8')
+    return hmac.new(SECRET_KEY, message, hashlib.sha256).hexdigest()
+
 # ------------------------------------------------------------------------------
 # SECTION 1 : LOGIQUE ORCHESTRATEUR (NICK FURY) ET APPEL A2A
 # ------------------------------------------------------------------------------
@@ -25,6 +34,19 @@ def ask_info_center(hero_name: str) -> str:
     print(f"\n[ORCHESTRATEUR] 📡 Appel A2A HTTP POST vers Info Center pour: {hero_name}")
     url = "http://localhost:8082/a2a/info_center"
     
+    trace_id = f"TX-{uuid.uuid4().hex[:8].upper()}"
+    clearance_level = "LEVEL_10"
+    signature = sign_clearance(trace_id, clearance_level)
+    
+    envelope = {
+        "trace_id": trace_id,
+        "clearance_level": clearance_level,
+        "signature": signature,
+        "max_hops": 2, 
+        "path": "Orchestrateur(NickFury)",
+        "query": hero_name
+    }
+    
     # Payload JSON-RPC 2.0 standard selon la spec A2A
     payload = {
         "jsonrpc": "2.0",
@@ -34,7 +56,7 @@ def ask_info_center(hero_name: str) -> str:
             "message": {
                 "messageId": str(uuid.uuid4()),
                 "role": "user",
-                "parts": [{"kind": "text", "text": f"Dossier sur {hero_name}"}]
+                "parts": [{"kind": "text", "text": json.dumps(envelope)}]
             }
         }
     }
@@ -68,9 +90,18 @@ def ask_info_center(hero_name: str) -> str:
             except Exception:
                 extracted = json.dumps(result, indent=2)
                 
+            try:
+                env_resp = json.loads(extracted)
+                if "error" in env_resp:
+                    final_text = env_resp["error"]
+                else:
+                    final_text = env_resp.get("data", extracted)
+            except Exception:
+                final_text = extracted
+                
             return json.dumps({
                 "raw_json": data,
-                "extracted_text": extracted
+                "extracted_text": final_text
             })
         else:
             return f"Erreur réseau : Code {response.status_code}"

@@ -112,35 +112,54 @@ Le serveur Agent Info Center doit être en ligne pour répondre aux appels de l'
         st.info("Cliquez sur 'Démarrer le Chat' pour afficher le terminal Nick Fury.")
 
 with tab_code:
-    st.header("Aperçu du Code Source")
+    st.header("Aperçu du Code Source (Points Clés)")
     
-    st.subheader("1. Intelligence de l'Info Center (agent.py)")
-    st.write("L'Info Center intercepte la demande A2A avec un `before_agent_callback`, contacte son LLM, cherche le fichier texte (RAG) et rédige un rapport.")
-    try:
-        root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        file_path_py = os.path.join(root_dir, "a2a_agents_infocenter", "info_center", "agent.py")
-        with open(file_path_py, "r", encoding="utf-8") as f:
-            content = f.read()
-        st.code(content, language="python")
-    except FileNotFoundError:
-        st.error("Fichier agent.py introuvable.")
+    st.subheader("1. L'Orchestrateur (Nick Fury) appelle l'Agent via A2A")
+    st.write("Nick Fury utilise le Tool Calling LangChain pour déclencher une requête HTTP structurée au format **JSON-RPC 2.0**, le standard du protocole A2A.")
+    st.code('''
+@tool
+def ask_info_center(hero_name: str) -> str:
+    url = "http://localhost:8082/a2a/info_center"
+    
+    # Payload standard A2A (JSON-RPC)
+    payload = {
+        "jsonrpc": "2.0",
+        "id": "uuid-requete",
+        "method": "message/send",
+        "params": {
+            "message": {
+                "messageId": "uuid-message",
+                "role": "user",
+                "parts": [{"kind": "text", "text": hero_name}]
+            }
+        }
+    }
+    
+    # Appel transparent pour l'orchestrateur
+    response = requests.post(url, json=payload)
+    return extraire_texte_a2a(response.json())
+''', language="python")
 
-    st.subheader("2. Requête A2A de Nick Fury (G02_streamlit_a2a.py)")
-    st.write("L'outil attaché à Nick Fury utilise un simple `requests.post` pour formater un payload standard JSON-RPC 2.0 (compatible Google ADK).")
-    try:
-        root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        file_path_py = os.path.join(root_dir, "G02_streamlit_a2a.py")
-        with open(file_path_py, "r", encoding="utf-8") as f:
-            content = f.read()
-            # Extract just the tool for clarity
-            import re
-            match = re.search(r"(@tool\ndef ask_info_center.*?)(?=\nclass NickFuryOrchestrator:)", content, re.DOTALL)
-            if match:
-                st.code(match.group(1), language="python")
-            else:
-                st.code(content, language="python")
-    except FileNotFoundError:
-        st.error("Fichier G02_streamlit_a2a.py introuvable.")
+    st.subheader("2. L'Agent Expert intercepte la demande")
+    st.write("Grâce au framework ADK, l'agent spécialisé intercepte la requête entrante avec un `callback`, effectue son traitement métier (RAG local), et court-circuite le llm par défaut.")
+    st.code('''
+def process_info_request(callback_context):
+    # 1. Extraction de la demande
+    user_text = callback_context.user_content.parts[0].text
+    
+    # 2. Traitement Métier Interne (RAG)
+    fichier = lire_fichier_local(user_text)
+    rapport = llm.invoke(f"Fais un rapport strict : {fichier}").content
+    
+    # 3. Renvoi direct dans le flux A2A (bypass du modèle standard)
+    return types.Content(role="model", parts=[types.Part(text=rapport)])
+
+# Déclaration de l'agent A2A
+root_agent = Agent(
+    name="SHIELD_InfoCenter",
+    before_agent_callback=process_info_request
+)
+''', language="python")
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")

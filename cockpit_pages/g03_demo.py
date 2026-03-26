@@ -124,33 +124,69 @@ Lancez-les via les boutons ci-dessous s'ils ne tournent pas déjà dans vos term
         st.info("Cliquez sur 'Démarrer la Chaîne' pour afficher l'interface principale.")
 
 with tab_code:
-    st.header("Aperçu du Code Source")
+    st.header("Aperçu du Code Source (Points Clés)")
     
-    st.subheader("1. L'Agent Avengers (Client & Serveur)")
-    st.write("Il est un serveur A2A pour Nick Fury, et un client A2A pour requêter l'Info Center en plein milieu de son traitement.")
-    try:
-        root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        file_path_py = os.path.join(root_dir, "a2a_agents_avengers", "avengers", "agent.py")
-        with open(file_path_py, "r", encoding="utf-8") as f:
-            content = f.read()
-        st.code(content, language="python")
-    except FileNotFoundError:
-        st.error("Fichier agent.py Avengers introuvable.")
+    st.subheader("1. Enveloppe de Sécurité (Orchestrateur)")
+    st.write("L'Orchestrateur englobe sa requête dans une enveloppe JSON incluant des contraintes d'entreprise (Traçabilité, RBAC, TTL).")
+    st.code('''
+    # Génération d'une signature cryptographique HMAC
+    trace_id = f"TX-{uuid.uuid4().hex[:8]}"
+    clearance_level = "LEVEL_10"
+    signature = sign_clearance(trace_id, clearance_level)
+    
+    envelope = {
+        "trace_id": trace_id,
+        "clearance_level": clearance_level,
+        "signature": signature,
+        "max_hops": 4, # Prévention de boucle infinie
+        "path": "NickFury",
+        "query": villain_name
+    }
+    
+    # Envoi de l'enveloppe via Payload JSON-RPC A2A
+    payload["params"]["message"]["parts"][0]["text"] = json.dumps(envelope)
+    requests.post("http://localhost:8081/a2a/avengers", json=payload)
+''', language="python")
 
-    st.subheader("2. L'Orchestrateur (G03_streamlit_chain.py)")
-    st.write("Le chef d'orchestre attend que la cascade A2A redescende jusqu'à lui.")
-    try:
-        root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        file_path_py = os.path.join(root_dir, "G03_streamlit_chain.py")
-        with open(file_path_py, "r", encoding="utf-8") as f:
-            content = f.read()
-            match = re.search(r"(@tool\ndef ask_avengers.*?)(?=\nclass NickFuryOrchestrator:)", content, re.DOTALL)
-            if match:
-                st.code(match.group(1), language="python")
-            else:
-                st.code(content, language="python")
-    except FileNotFoundError:
-        st.error("Fichier G03 introuvable.")
+    st.subheader("2. Agent Tactique : Double Profil (Client/Serveur)")
+    st.write("Les Avengers relaient d'abord la demande à l'Info Center en décrémentant le compteur de sauts, avant d'agir sur la réponse.")
+    st.code('''
+def process_avengers_request(callback_context):
+    envelope = json.loads(callback_context.user_content.parts[0].text)
+    
+    if envelope["max_hops"] <= 0:
+        return "[Erreur] Boucle infinie A2A."
+        
+    # Relai vers Info Center (Hops - 1)
+    envelope["max_hops"] -= 1
+    envelope["path"] += " ➔ Avengers"
+    
+    dossier = requests.post("http://localhost:8082/.../info_center", json=envelope)
+    
+    # Génération du combat basé sur le dossier reçu
+    combat = llm.invoke(f"Simule un combat avec : {dossier}")
+    
+    # Renvoi du rapport à l'Orchestrateur
+    envelope["path"] += " ➔ Avengers"
+    return json.dumps(envelope) # Contient le combat final
+''', language="python")
+
+    st.subheader("3. Signature et Zero-Trust (Info Center)")
+    st.write("L'agent terminal de la chaîne vérifie cryptographiquement que la requête n'a pas été falsifiée en cours de route par un agent intermédiaire.")
+    st.code('''
+def process_info_request(callback_context):
+    envelope = json.loads(callback_context.user_content.parts[0].text)
+    
+    # Vérification stricte RBAC
+    if envelope["clearance_level"] != "LEVEL_10":
+         return "[Refusé] Habilitation insuffisante."
+         
+    # Vérification HMAC (Zero Trust)
+    if not verify_clearance(envelope["trace_id"], envelope["clearance_level"], envelope["signature"]):
+         return "[Refusé] Falsification A2A détectée."
+         
+    # Accès autorisé au dossier...
+''', language="python")
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
