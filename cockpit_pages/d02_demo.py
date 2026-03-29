@@ -110,7 +110,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.success('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise : L'Intelligence Décisionnelle (Executive Dashboards)**
 
 Cette brique d'IA a la capacité de rendre la création de tableaux de bord PowerBI / Tableau obsolète pour les besoins ponctuels du quotidien.
@@ -125,4 +127,6 @@ Au lieu de passer par le service IT Analytics pour créer un tableau de bord (D�
   4. L'affiche en 10 secondes sur l'ordinateur du directeur.
 
 C'est là le véritable **"Graal" de l'Agentic Workspace** : transformer n'importe quel dirigeant en expert de la donnée temps réel.
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)

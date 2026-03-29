@@ -88,7 +88,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.success('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise :**
 
 Dans la réalité d'un Système d'Information (SI) du monde réel, **cette étape B01 N'EXISTE PAS**.
@@ -102,4 +104,6 @@ L'entreprise n'invente pas sa donnée de base (knowledge base) avec un LLM, elle
 * Bases de données SQL / NoSQL existantes
 
 *Le véritable défi en entreprise n'est pas de générer cette donnée, mais de s'y **connecter**, de la **récupérer** proprement (Ingestion & ETL) et de la **mettre à jour**.*
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)

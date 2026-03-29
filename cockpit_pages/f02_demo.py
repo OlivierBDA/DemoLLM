@@ -139,7 +139,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.info('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise : Architecture Hub & Spoke**
 
 Dans un SI mature, vous ne voulez pas créer un chatbot séparé pour le support IT, un autre pour la Finance, un autre pour les RH.
@@ -151,4 +153,6 @@ Cette architecture `F02` vous permet de créer un **Assistant Unique (Hub)** :
 * Une fois le problème réglé, l'Assistant redevient "Vierge" et prêt pour un problème d'un tout autre domaine.
 
 C'est ainsi qu'on gère le "problème de la fenêtre de contexte" : on ne charge pas toutes les règles de l'entreprise dans la mémoire du LLM, on les charge à la demande.
-''')
+
+</div>
+""", unsafe_allow_html=True)

@@ -121,7 +121,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.warning('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise :**
 
 Le "Text-to-SQL" brut est un excellent outil interne pour les analystes de données, mais il est **complexe à déployer à grande échelle** pour deux raisons majeures :
@@ -129,4 +131,6 @@ Le "Text-to-SQL" brut est un excellent outil interne pour les analystes de donn�
 2. **La Complexité des Bases :** Dans un SI réel (ex: SAP, Salesforce), une base de données peut contenir 500 tables avec des noms obscurs (`TBL_USR_HST_001`). Le LLM ne pourra jamais ingérer un tel schéma dans son prompt, ni deviner le sens caché d'une colonne abrégée.
 
 *C'est pour cela que l'étape C02 (Le Catalogue de Données) est absolument vitale pour fiabiliser l'IA en entreprise !*
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)

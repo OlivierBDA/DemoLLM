@@ -106,7 +106,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.success('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise : L'Expérience Utilisateur des Agents (UX)**
 
 Les agents IA sont souvent lents car ils font beaucoup de requêtes réseau (RAG, Web Search, API métier). 
@@ -119,4 +121,6 @@ Avec MCP Progress :
 `12s` : Affichage de la réponse.
 
 C'est ce niveau de feedback qui transforme un "gadget" anxiogène en un outil professionnel fiable aux yeux des collaborateurs.
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)

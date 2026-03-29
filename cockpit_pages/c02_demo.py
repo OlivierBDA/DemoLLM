@@ -125,7 +125,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.success('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise : La Couche Sémantique**
 
 Les architectures modernes de données (Lakehouse, Data Mesh) reposent lourdement sur cette étape.
@@ -137,4 +139,6 @@ Ainsi, quand un directeur commercial demande *"Fais-moi le top 10 des produits a
 3. Génère la requête SQL infaillible.
 
 **C'est cette couche de métadonnées sémantiques qui transforme un gadget d'IA en outil décisionnel robuste.**
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)

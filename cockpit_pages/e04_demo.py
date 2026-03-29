@@ -116,7 +116,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.success('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise : Interfacer une Base de Données Monstrueuse**
 
 Imaginez que vous ayez une base de données Cloud (Snowflake/BigQuery) avec des millions de fiches clients.
@@ -126,4 +128,6 @@ Au lieu de créer un outil fastidieux `search_client_by_id`, on expose un **Temp
 Si le LLM "Agent Support Client" voit qu'un email indique `Client ID : 49581A`, il comprend qu'il peut instantanément requêter `mcp://crm/clients/49581A` pour obtenir la fiche complète avant même de commencer à rédiger sa réponse.
 
 C'est extrêmement puissant pour l'intégration de gros volumes de données avec une latence quasi nulle en phase de découverte.
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)

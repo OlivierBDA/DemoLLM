@@ -112,7 +112,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.success('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise : La Gouvernance des Prompts Métiers**
 
 Aujourd'hui, chaque développeur d'une équipe IA va écrire son propre prompt : 
@@ -125,4 +127,6 @@ Le serveur "Legal Service" centralise le prompt. Le développeur frontend demand
 Si la réglementation juridique change, l'expert métier met à jour le Prompt sur le serveur MCP, et **toutes les applications clientes de l'entreprise utilisant ce prompt sont automatiquement à jour**.
 
 C'est la fin du développement en silo.
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)

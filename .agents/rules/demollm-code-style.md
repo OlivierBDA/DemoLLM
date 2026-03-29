@@ -8,7 +8,7 @@ When working on the Demo LLM project, strictly adhere to the following architect
 
 ## 1. Pedagogical Clarity (Zero Over-Engineering)
 - **Standalone Scripts**: Every Python demo file (e.g., `G03...`, `A01...`) MUST be entirely autonomous. Do not create complex central utility libraries or abstract base classes.
-- **Embrace Duplication (Anti-DRY)**: Actively duplicate repetitive code (like `ChatOpenAI` instantiation or Streamlit UI headers) so that a learner can read a single file from top to bottom and understand the entire flow without navigating multiple files.
+- **Embrace Duplication (Anti-DRY)**: Actively duplicate repetitive code (like `ChatOpenAI` instantiation or Streamlit UI headers) so that a learner can read a single file from top to bottom and understand the entire flow without navigating multiple files. **Exception:** Graphic styling (CSS, theme files) can and should be mutualized in central files (e.g. `00_demo_cockpit.py` or a dedicated CSS file) to keep the UI homogeneous and simplify maintenance.
 
 ## 2. Monolithic File Structure
 - **Two Distinct Sections**: Every UI demo script must be strictly separated into two visual sections using bold comments (e.g., `# -----------------`):

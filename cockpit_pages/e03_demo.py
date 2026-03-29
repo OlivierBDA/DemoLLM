@@ -110,7 +110,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.success('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise : L'Intranet "AI-Ready"**
 
 Imaginez un serveur MCP branché sur Confluence, SharePoint Docs ou Google Drive.
@@ -122,4 +124,6 @@ Au lieu de fouiller lui-même dans les dossiers, l'Agent :
 4. Fournit une réponse exacte et contextualisée.
 
 C'est "l'Intranet" vu par les yeux d'une Machine, sans avoir besoin d'exporter ou copier la donnée manuellement.
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)

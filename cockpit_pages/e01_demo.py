@@ -109,7 +109,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.success('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise : L'Agilité par les Microservices IA**
 
 Aujourd'hui, si une équipe métier crée un nouvel outil (ex: Calculateur d'empreinte carbone), elle doit demander à l'équipe IA de mettre à jour le code des agents pour l'utiliser :
@@ -119,4 +121,6 @@ Aujourd'hui, si une équipe métier crée un nouvel outil (ex: Calculateur d'emp
 L'agent interroge régulièrement la galaxie de services MCP pour demander : "Quoi de neuf ?". Dès que le Serveur Carbone est en ligne, l'Agent apprend son existence, comprend son schéma d'entrée/sortie, et peut l'utiliser **immédiatement**.
 
 C'est l'équivalent IA du modèle **Pub/Sub** et des architectures orientées services (SOA) poussés à leur paroxysme.
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)

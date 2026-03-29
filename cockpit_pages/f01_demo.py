@@ -132,7 +132,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.info('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise :**
 
 Dans un SI d'entreprise, cette approche permet de créer une usine à Agents (Agent Factory) :
@@ -144,4 +146,6 @@ Dans un SI d'entreprise, cette approche permet de créer une usine à Agents (Ag
     *   *Skill Dev* : Validation de code avec des règles de nommage très spécifiques à l'entreprise.
 
 On décentralise l'expertise métier vers les métiers eux-mêmes.
-''')
+
+</div>
+""", unsafe_allow_html=True)

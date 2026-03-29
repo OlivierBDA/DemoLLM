@@ -123,7 +123,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.success('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise : L'Agent qui "Fait" au lieu de juste "Dire"**
 
 Le Tool Calling (ou Function Calling) est ce qui permet de passer d'un simple "chatbot" (qui génère du texte) à un véritable **Agent Autonome** qui interagit avec le SI de l'entreprise.
@@ -134,4 +136,6 @@ Le Tool Calling (ou Function Calling) est ce qui permet de passer d'un simple "c
 *  **Agent CRM** : "Crée un ticket Jira pour ce bug que je viens de t'expliquer". L'IA utilise `create_jira_ticket(title, description)`.
 
 **Le grand défi** de l'ingénierie moderne est de sécuriser ces outils : si l'IA a l'outil `delete_database()`, elle pourrait l'utiliser par erreur. C'est pourquoi on introduit souvent une étape de confirmation humaine ("Human-in-the-loop") avant l'exécution finale.
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)

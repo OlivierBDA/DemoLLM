@@ -72,7 +72,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.info('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise :**
 
 Dans un Système d'Information, ce type d'appel simple ("One-shot") est parfait pour :
@@ -81,4 +83,6 @@ Dans un Système d'Information, ce type d'appel simple ("One-shot") est parfait 
 * **Traduction :** Traduction ou reformulation automatique à la volée.
 
 **Avantage :** Pas besoin de mémoire de session (Stateless), très facile et peu coûteux à déployer et mettre à l'échelle.
-''')
+
+</div>
+""", unsafe_allow_html=True)

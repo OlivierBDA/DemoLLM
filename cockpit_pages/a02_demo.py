@@ -74,7 +74,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.info('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise :**
 
 Cette logique d'accumulation d'historique (passer l'entièreté de la conversation au modèle à chaque fois) est le cœur brut de tous les Copilotes et Chatbots.
@@ -82,4 +84,6 @@ Cette logique d'accumulation d'historique (passer l'entièreté de la conversati
 **Prudence SI :**
 * **Limites de Tokens :** La fenêtre de contexte d'un LLM n'est pas infinie. En entreprise, un historique trop long va générer des erreurs, augmenter drastiquement la latence et coûter très cher (facturation au token).
 * **Solution :** Il faut mettre en place des stratégies de "fenêtrage" (garder uniquement les *N* derniers messages) ou de "résumé dynamique" (le LLM résume régulièrement la conversation pour compresser la mémoire).
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)

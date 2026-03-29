@@ -115,7 +115,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.success('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise : L'Orchestrateur Universel**
 
 Ce que montre E02, c'est l'essence même de l'**Agentic Workspace** de demain. L'IA (ici LangChain) n'a qu'un unique "client de communication" : le protocole MCP. 
@@ -124,4 +126,6 @@ Plutôt que d'apprendre au LLM à parler à Jira via son API REST spécifique, �
 `LLM -> MCP -> [Jira, Salesforce, GitHub]`
 
 Cela permet aux équipes d'**Enterprise Architecture** de standardiser la gouvernance. Chaque système possède son "Traducteur MCP" (le Serveur), et le super-agent central vient simplement s'y brancher. 
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)

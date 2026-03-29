@@ -2,6 +2,58 @@ import streamlit as st
 
 st.set_page_config(page_title="Marvel LLM Demo", page_icon="🦸", layout="wide")
 
+# Injection CSS globale - Charte Gulf Academy (Stitch)
+st.markdown("""
+<style>
+/* Sidebar "No-Line" Rule & Background */
+[data-testid="stSidebar"] {
+    background-color: #eceef0 !important;
+    border-right: none !important;
+}
+
+/* Hide native Streamlit separation lines */
+header {
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+/* Tabs "GT" Style */
+[data-baseweb="tab-list"] {
+    gap: 1rem;
+}
+[data-baseweb="tab"] {
+    padding-bottom: 0px !important;
+    padding-top: 10px !important;
+}
+[data-baseweb="tab"] [aria-selected="true"] {
+    border-bottom: 3px solid #fd8600 !important;
+    color: #051b3b !important;
+}
+
+/* Global container styling */
+div.ouverture-si-box {
+    background-color: #bee9ff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    color: #051b3b;
+    margin-top: 1rem;
+    border-left: 5px solid #0d6683;
+}
+
+/* Code Blocks Styling */
+[data-testid="stCode"] {
+    background-color: #eef7fc !important;
+    border-radius: 8px !important;
+}
+[data-testid="stCode"] pre {
+    background-color: transparent !important;
+}
+[data-testid="stCode"] code {
+    background-color: transparent !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 try:
     # L'API st.navigation permet de créer une application multi-pages sans contrainte de dossiers
     # ou de renommage de fichiers complexes.

@@ -107,7 +107,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.success('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise : L'Intranet "Vivant"**
 
 Un contexte très classique : L'utilisateur utilise un Agent IA connecté à Confluence. 
@@ -115,4 +117,6 @@ Pendant qu'il discute avec l'Agent, un collègue met à jour la page Confluence 
 
 Sans notification : L'Agent continue de s'appuyer sur l'ancienne version cachée en mémoire (Risque d'hallucination ou de fausse information).
 Avec MCP Notifications : Le serveur Confluence envoie un ping à l'Agent `ResourceListChanged`. L'Agent rafraîchit son contexte de lui-même et utilise instantanément la nouvelle règle, le tout en plein milieu de la conversation.
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)

@@ -167,11 +167,15 @@ def fetch_agent_card(app_name, port):
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.info('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise :**
 
 Dans un SI moderne et industrialisé (par exemple autour d'une plateforme GCP et de Vertex AI) :
 *   **Micro-services Multi-Agents** : Au lieu d'avoir un "God Agent" monolithique, l'entreprise crée de multiples petits agents spécialisés (Agent RH Congés, Agent Support IT, Agent Finance Facturation).
 *   **Le Manifeste comme Contrat** : Chaque agent publie sa "Card" précisant ses inputs, ses outputs, et sa description sémantique.
 *   **Orchestration Dynamique** : L'agent "Hub" (ou le orchestrateur principal d'accueil utilisateur) va découvrir dynamiquement ces agents. Si un nouveau service est ajouté, il est immédiatement détecté et utilisable par l'orchestrateur sans redéploiement global.
-''')
+
+</div>
+""", unsafe_allow_html=True)

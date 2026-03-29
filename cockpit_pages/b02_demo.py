@@ -171,7 +171,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.info('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise :**
 
 Le processus illustré ici (Chunking -> Embedding -> FAISS -> LLM) est le standard absolu de l'IA d'entreprise aujourd'hui.
@@ -180,4 +182,6 @@ Le processus illustré ici (Chunking -> Embedding -> FAISS -> LLM) est le standa
 * **Mise à l'échelle (Scale) :** FAISS est excellent localement (ce que nous utilisons), mais en entreprise sur des millions de documents, on optera pour des bases vectorielles dédiées (Pinecone, Qdrant) ou l'extension vectorielle de bases existantes (pgvector pour PostgreSQL, Azure AI Search).
 * **Gestion des Droits (RBAC) :** Le RAG ne doit pas permettre à un employé de chercher dans un document RH s'il n'en a pas les droits. La recherche vectorielle doit donc être pré-filtrée par les habilitations de l'utilisateur actif.
 * **Complexité des Formats :** Récupérer du texte brut comme dans l'étape B01 est facile. Extraire le texte de PDF scannés, de tableaux Excel ou de présentations PPTX demande des pipelines d'extraction (ETL / OCR) beaucoup plus lourds.
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)

@@ -163,7 +163,9 @@ root_agent = Agent(
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.info('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise : Architecture en Essaim (Swarm Architecture)**
 
 Dans un Système d'Information moderne :
@@ -171,4 +173,6 @@ Dans un Système d'Information moderne :
 *   **API Agnostique** : L'orchestrateur demande au sous-agent de comptabilité via le standard interne (A2A JSON-RPC ici, ou gRPC dans la vraie vie) de chercher les informations.
 *   **Abstraction des sources** : L'orchestrateur se fiche de savoir si le sous-agent a lu un fichier TXT (comme ici), fait une requête SQL ou appelé Kafka. Il ne voit qu'une réponse standardisée "Rapport généré".
 *   **Sécurité et RBAC** : Ce mécanisme permet de sécuriser chaque Agent avec ses propres habilitations.
-''')
+
+</div>
+""", unsafe_allow_html=True)

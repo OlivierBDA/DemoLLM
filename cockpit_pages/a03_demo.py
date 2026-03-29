@@ -112,7 +112,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.info('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise :**
 
 Des interfaces de ce type sont idéales pour :
@@ -121,4 +123,6 @@ Des interfaces de ce type sont idéales pour :
 
 **À retenir :** 
 L'historique est ici gardé en mémoire vive (`st.session_state`). Dans un "vrai" SI, afin de garantir la scalabilité (si l'utilisateur change de serveur) et la persistance (si le serveur redémarre), cet historique doit être stocké en base de données (ex: Redis ou PostgreSQL).
-''')
+
+</div>
+""", unsafe_allow_html=True)

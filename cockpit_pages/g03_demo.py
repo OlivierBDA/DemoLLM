@@ -190,7 +190,9 @@ def process_info_request(callback_context):
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.info('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise : Multi-Agent Supply Chain**
 
 Ce modèle "Chained Agents" est le Saint Graal des systèmes autonomes en entreprise :
@@ -200,4 +202,6 @@ Ce modèle "Chained Agents" est le Saint Graal des systèmes autonomes en entrep
 *   **Résolution** : Le Niveau 3 remonte les preuves, le Niveau 2 bloque la transaction, et le Niveau 1 annonce au client que la situation est sous contrôle.
 
 L'utilisateur final n'a interagi qu'avec *un seul point d'entrée*, mais l'entreprise a mobilisé 3 intelligences artificielles distinctes et spécialisées via des canaux sécurisés M2M.
-''')
+
+</div>
+""", unsafe_allow_html=True)

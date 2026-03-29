@@ -102,7 +102,9 @@ with tab_code:
 
 with tab_conclusion:
     st.header("Ouverture SI d'Entreprise")
-    st.warning('''
+    st.markdown("""
+<div class="ouverture-si-box">
+
 **Parallèle Entreprise :**
 
 Le routage est l'étape fondatrice pour passer d'un simple "Chatbot RAG" à un **Bot Intelligent (Agentic Workflow)** dans une entreprise.
@@ -111,4 +113,6 @@ Le routage est l'étape fondatrice pour passer d'un simple "Chatbot RAG" à un *
 * **Support IT (Helpdesk) :** Si la question concerne le mot de passe, router vers l'API A. Si cela concerne un logiciel, router vers la Base Documentaire RAG B. Si c'est complexe, escalader vers le noeud "Agent Humain".
 * **Sécurité & Conformité :** LangGraph sert très souvent à créer des garde-fous (Guardrails). Un noeud "Inspecteur" peut filtrer systématiquement la sortie du LLM pour s'assurer qu'il ne divulgue pas de PII (Données Personnelles) avant de l'envoyer à l'utilisateur.
 * **Fiabilité :** Le graphe permet d'implémenter des redondances (Fallback). "Si l'API X échoue, exécute le Nœud Y pour la réparation".
-    ''')
+    
+</div>
+""", unsafe_allow_html=True)
